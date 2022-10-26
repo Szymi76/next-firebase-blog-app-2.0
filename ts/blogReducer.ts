@@ -1,39 +1,39 @@
-import { Blog, BlogSection, BlogComment } from "./BlogTypes";
+import { Blog, BlogSection, BlogComment, BlogArticle } from "./BlogTypes";
 
 // dostępne akcje reducera
 enum ActionTypes {
   BLOG_TITLE = "BLOG_TITLE", // title
   BLOG_DESCRIPTION = "DESCRIPTION", // description
-  BLOG_IMAGE = "IMAGE", // image
-  FINAL_DATA = "FINAL_DATA", // authorUID, tags, timestamp
+  BLOG_IMAGE = "BLOG_IMAGE", // image
   TITLE = "TITLE", // section title
-  ARTICLE = "ARTICLE", // section article
+  ARTICLE = "ARTICLE", // section one article
+  ALL_ACRTICLES = "FULL_ARTICLES", // section all articles
   IMAGE = "IMAGE", // section image
+  FINAL_DATA = "FINAL_DATA", // authorUID, tags, timestamp
 }
 
 // akcje dispatcha
-interface BlogAction {
-  type: ActionTypes;
-  payload: any;
-}
+type BlogAction =
+  | { type: ActionTypes.BLOG_TITLE; payload: string }
+  | { type: ActionTypes.BLOG_DESCRIPTION; payload: string }
+  | { type: ActionTypes.BLOG_IMAGE; payload: string }
+  | { type: ActionTypes.TITLE; payload: { newValue: string; i: number } }
+  | { type: ActionTypes.ARTICLE; payload: { newValue: BlogArticle; i: number; j: number } }
+  | { type: ActionTypes.ALL_ACRTICLES; payload: { newValue: BlogArticle[]; i: number } }
+  | { type: ActionTypes.IMAGE; payload: { newValue: any; i: number } }
+  | { type: ActionTypes.FINAL_DATA; payload: { authorUID: string; tags: string[]; timestamp: number } };
+
+// przykładowy artykuł
+const DEFAULT_ARTICLE: BlogArticle = {
+  text: "Propsów nie da się zmienić z wnętrza komponentu. A jeśli spróbujesz to pewnie Ci się uda, ale będziesz mieć ogromne problemy — niespójne dane na ekranie, a może nawet jakieś błędy. Generalnie: Straszne rzeczy. Co do zasady: Propsów nie zmieniamy z wnętrza komponentu, do którego zostały one przekazane. I kropka.",
+  type: "text",
+};
 
 // przykładowa sekcja
 const DEFAULT_SECTION: BlogSection = {
   title: "Propsy są niemutowalne",
-  articles: [
-    {
-      text: "Propsów nie da się zmienić z wnętrza komponentu. A jeśli spróbujesz to pewnie Ci się uda, ale będziesz mieć ogromne problemy — niespójne dane na ekranie, a może nawet jakieś błędy. Generalnie: Straszne rzeczy. Co do zasady: Propsów nie zmieniamy z wnętrza komponentu, do którego zostały one przekazane. I kropka.",
-      type: "text",
-    },
-    {
-      text: "Jeszcze jedna mała uwaga: Do state nie dobierzesz się w funkcyjnych komponentach. Stąd też ich nazwa: Stateless Functional Components. Potrzebna będzie klasa. Skoro to jest już jasne, weźmy się za pisanie kodu:",
-      type: "text",
-    },
-  ],
-  image: {
-    file: null,
-    url: null,
-  },
+  articles: [DEFAULT_ARTICLE, DEFAULT_ARTICLE],
+  image: null,
 };
 
 // przykładowy komentarz
@@ -47,7 +47,7 @@ const DEFAULT_COMMENT: BlogComment = {
 };
 
 // początkowy state
-const INITIAL_STATE: Blog = {
+const initialState: Blog = {
   title: "Twój tytuł bloga...",
   description: "Opis bloga...",
   image:
@@ -61,4 +61,70 @@ const INITIAL_STATE: Blog = {
 };
 
 // blog reducer
-const blogReducer = (state: Blog, action: BlogAction) => {};
+const blogReducer = (state: Blog, action: BlogAction) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    // tytul calego bloga
+    case ActionTypes.BLOG_TITLE:
+      return {
+        ...state,
+        title: payload,
+      };
+    // opis całego bloga
+    case ActionTypes.BLOG_DESCRIPTION:
+      return {
+        ...state,
+        description: payload,
+      };
+    // zdjęcie bloga
+    case ActionTypes.BLOG_IMAGE:
+      return {
+        ...state,
+        image: payload,
+      };
+    // tytuł konkretnej sekcji
+    case ActionTypes.TITLE:
+      return {
+        ...state,
+        content: state.content.map((s, i) => (i == payload.i ? { ...s, title: payload.newValue } : s)),
+      };
+    // zawartość konkretnego artykułu
+    case ActionTypes.ARTICLE:
+      return {
+        ...state,
+        content: state.content.map((s, i) =>
+          i == payload.i
+            ? {
+                ...s,
+                articles: s.articles.map((a, j) => (j == payload.j ? payload.newValue : a)),
+              }
+            : s
+        ),
+      };
+    // zawartośc całego konkretnego artykułu
+    case ActionTypes.ALL_ACRTICLES:
+      return {
+        ...state,
+        content: state.content.map((s, i) => (i == payload.i ? { ...s, articles: payload.newValue } : s)),
+      };
+    // zdjęcie konkretnej sekcji
+    case ActionTypes.IMAGE:
+      return {
+        ...state,
+        content: state.content.map((s, i) => (i == payload.i ? { ...s, image: payload.newValue } : s)),
+      };
+    // ostateczne dane do bloga
+    case ActionTypes.FINAL_DATA:
+      return {
+        ...state,
+        authorUID: payload.authorUID,
+        tags: payload.tags,
+        timestamp: payload.timestamp,
+      };
+    default:
+      return state;
+  }
+};
+
+export { initialState, blogReducer, ActionTypes };

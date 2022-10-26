@@ -1,7 +1,12 @@
+interface BlogArticle {
+  text: string;
+  type: "text" | "code";
+}
+
 interface BlogSection {
   title: string;
-  articles: { text: string; type: "text" | "code" }[];
-  image: { file: File | null; url: string | null };
+  articles: BlogArticle[];
+  image: any;
 }
 
 interface BlogComment {
@@ -24,4 +29,4 @@ interface Blog {
   timestamp: number;
 }
 
-export type { Blog, BlogSection, BlogComment };
+export type { Blog, BlogSection, BlogArticle, BlogComment };
