@@ -1,0 +1,44 @@
+/* solid */
+.button-solid {
+    padding: 0.5rem 1.75rem;
+    background-color: var(--violet);
+    color: var(--white);
+    border: 1px solid var(--light-violet);
+    border-radius: var(--radius);
+    font-size: large;
+    outline: none;
+    transition-duration: 100ms;
+}
+
+.button-solid:hover, .button-solid:focus {
+    filter: brightness(90%);
+}
+
+
+/* outlined  */
+.button-outlined {
+    padding: .15rem 1.25rem;
+    border-radius: var(--radius);
+    outline: none;
+    transition-duration: 100ms;
+}
+
+.button-outlined:hover, .button-solid:focus {
+    filter: brightness(95%);
+}
+
+.button-blue {
+    border: 1px solid #3b82f6;
+    background-color: #dbeafe;
+    color: #3b82f6;
+}
+.button-red {
+    border: 1px solid #ef4444;
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+.button-green {
+    border: 1px solid #22c55e;
+    background-color: #dcfce7;
+    color: #22c55e;
+}

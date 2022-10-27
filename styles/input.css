@@ -1,0 +1,58 @@
+/* normal */
+.input-normal {
+    padding: .5rem 1rem ;
+    background-color: var(--white);
+    color: var(--dark);
+    border: 1px solid var(--gray);
+    border-radius: var(--radius);
+    font-size: large;
+    font-weight: 400;
+    outline: none;
+    transition-duration: 50ms;
+}
+.input-normal:focus {
+    border: 2px solid var(--violet);
+    padding: calc(.5rem - 1px) calc(1rem - 1px) ;
+}
+.input-normal::placeholder {
+    font-weight: 300;
+}
+
+
+/* file */
+.input-file {
+    position: relative;
+    background-color: var(--white);
+    width: min-content;
+    padding: 1rem 4rem;
+    border: 1px solid var(--gray);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    width: 100%;
+    max-width: 26rem;
+    text-align: center;
+}
+.input-file-icon {
+    padding: .75rem;
+    background-color: var(--light-gray);
+    border-radius: 9999px;
+    height: 3.5rem;
+    width: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.input-file input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+}
+
