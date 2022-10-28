@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 
 // początkowy state reducera
-const INITIAL_STATE = {
+const initialState = {
   loading: false,
   error: null,
 };
@@ -56,7 +56,7 @@ const useAuthUser = () => {
   useEffect(() => {
     let unsubscribe: Unsubscribe;
 
-    unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser);
     });
 
@@ -70,7 +70,7 @@ const useAuthUser = () => {
 const useAuthCreateUser = () => {
   const user = useAuthUser();
 
-  const [state, dispatch] = useReducer(authReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   const createUser = async (
     email: string,
@@ -80,7 +80,7 @@ const useAuthCreateUser = () => {
   ) => {
     dispatch(ActionTypes.START);
     createUserWithEmailAndPassword(auth, email, password)
-      .then((result) => {
+      .then(result => {
         updateProfile(result.user, {
           displayName: displayName,
           photoURL: photoURL,
@@ -102,7 +102,7 @@ const useAuthCreateUser = () => {
 const useAuthSignIn = () => {
   const user = useAuthUser();
 
-  const [state, dispatch] = useReducer(authReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   const signIn = async (email: string, password: string) => {
     dispatch(ActionTypes.START);

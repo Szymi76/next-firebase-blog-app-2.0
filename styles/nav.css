@@ -1,0 +1,96 @@
+.transparent {
+    background-color: transparent !important;
+}
+.nav-normal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    height: 3rem;
+    width: 100%;
+    background-color: var(--dark);
+    color: var(--white);
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between;
+    transition-duration: 200ms;
+}
+.nav-normal .logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .5rem;
+    font-size: large;
+    cursor: pointer;
+    transition-duration: 100ms;
+}
+.nav-normal .logo:hover {
+    filter: brightness(90%);
+}
+.nav-normal .links {
+    width: 60%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: 200;
+    font-size: large;
+    gap: 1.5rem;
+}
+.nav-normal .links li:hover {
+    text-decoration: underline;
+}
+.nav-normal .right-side {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+.nav-normal .right-side img {
+    border-radius: 9999px;
+    height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition-duration: 100ms;
+}
+.nav-normal .right-side img:hover {
+    border-color: var(--white);
+}
+
+
+@media (max-width: 900px) {
+    .nav-normal {
+        padding: 0 .5rem;
+    }
+    .nav-normal .links {
+        width: 0%;
+        flex-direction: column;
+        justify-content: center;
+        visibility: hidden;
+        gap: 0;
+    }
+    .nav-normal .links li {
+        width: 100%;
+        padding: .5rem 0;
+        text-decoration: none !important;
+        cursor: pointer;
+    }
+    .nav-normal .toggled {
+        position: absolute;
+        top: 3rem;
+        left: 0;
+        visibility: visible;
+        background-color: inherit;
+        width: 100%;
+        text-align: center;
+        font-size: x-large;
+        border-top: 1px solid var(--white);
+    }
+    .nav-normal .toggled li {
+        padding: .5rem 0;
+    }
+    .nav-normal .toggled li:hover {
+        /* background-color: #2a2c44; */
+        backdrop-filter: brightness(90%);
+    }
+}

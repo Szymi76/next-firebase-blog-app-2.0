@@ -1,47 +1,56 @@
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { initialState, blogReducer, ActionTypes } from "../ts/blogReducer";
-import * as Input from "../components/Input";
-import * as Button from "../components/Button";
+import * as Nav from "../components/Nav";
+import homeImage from "../public/home-image.jpg";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import Card from "../components/BlogCard";
+import { ExampleBlog } from "../ts/staticData";
+import Link from "next/link";
 
 const Home = () => {
   const [blog, dispatch] = useReducer(blogReducer, initialState);
 
-  const [username, setUsername] = useState("");
-
-  useEffect(() => console.log(username), [username]);
-
   return (
-    <div>
-      {blog.content[0].articles.map(e => {
-        return <p>{e.text}</p>;
-      })}
-      <button
-        onClick={() =>
-          dispatch({
-            type: ActionTypes.ALL_ACRTICLES,
-            payload: { i: 0, newValue: [] },
-          })
-        }
-      >
-        CHANGE
-      </button>
-      <br></br>
-      <Input.Normal
-        type="text"
-        placeholder="Nickname"
-        onChange={e => setUsername(e.target.value)}
-        value={username}
-      />
-      {/* <br></br> */}
-      <Button.Solid>Przycisk</Button.Solid>
-      <Input.File onChange={e => console.log(e.target.files)}>
-        <p className="text-gray-600">
-          <b className="text-violet-500">Kliknij aby zmienić</b> albo przeciagnij i upuść
-          zdjęcie. PNG, JPG
-        </p>
-      </Input.File>
-      <Button.Outlined children={"+"} color="green" />
-    </div>
+    <>
+      <Nav.Normal transparent={true} />
+      <main id="home">
+        <section className="first-section">
+          <img
+            src={homeImage.src}
+            className="h-screen object-cover w-full"
+            alt="computer-image"
+          />
+          <div>
+            <h1>Stwórz swój własny blog już dziś.</h1>
+            <p>Wspiera cię kadra niezastapionych eksperów we wszystkich dziedzinach</p>
+            <button>
+              <span>Stwórz</span>
+              <ArrowRightIcon className="h-6" />
+            </button>
+          </div>
+        </section>
+        <section className="second-section">
+          <h1 className="title">Popularne</h1>
+          <Card blog={ExampleBlog} size="large" />
+          <div className="small-cards">
+            <Card blog={ExampleBlog} size="small" />
+            <Card blog={ExampleBlog} size="small" />
+            <Card blog={ExampleBlog} size="small" />
+            <Link href={"/"}>
+              <button>
+                <span>Zobacz wszystkie</span>
+                <ArrowRightIcon className="h-5" />
+              </button>
+            </Link>
+          </div>
+        </section>
+        <section className="third-section">
+          <p>
+            <span>Szybki blog</span> - wszystkie prawa zastrzeżone
+          </p>
+        </section>
+      </main>
+    </>
   );
 };
 
