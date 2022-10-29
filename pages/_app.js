@@ -1,3 +1,5 @@
+import React from "react";
+
 import "../styles/global.css";
 import "../styles/input.css";
 import "../styles/button.css";
@@ -13,9 +15,11 @@ function MyApp({ Component, pageProps }) {
   const [blog, dispatch] = useReducer(blogReducer, initialState);
 
   return (
-    <BlogContext.Provider value={{ blog, dispatch }}>
-      <Component {...pageProps} />
-    </BlogContext.Provider>
+    <React.StrictMode>
+      <BlogContext.Provider value={{ blog, dispatch }}>
+        <Component {...pageProps} />
+      </BlogContext.Provider>
+    </React.StrictMode>
   );
 }
 

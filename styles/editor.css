@@ -39,13 +39,12 @@
     display: flex;
 }
 #editor #container #form, #editor #container #blog-editor {
-    height: 100%;
     overflow-y: scroll;
 }
 #editor #container #blog-editor {
     display: flex;
     justify-content: center;
-    margin-bottom: 10rem;
+    margin-bottom: 7rem;
 }
 #resizer {
     width: 3px;
