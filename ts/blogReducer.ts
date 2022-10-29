@@ -1,4 +1,5 @@
 import { Blog, BlogSection, BlogComment, BlogArticle } from "./BlogTypes";
+import { createContext, Dispatch } from "react";
 
 // dostępne akcje reducera
 enum ActionTypes {
@@ -18,10 +19,16 @@ type BlogAction =
   | { type: ActionTypes.BLOG_DESCRIPTION; payload: string }
   | { type: ActionTypes.BLOG_IMAGE; payload: string }
   | { type: ActionTypes.TITLE; payload: { newValue: string; i: number } }
-  | { type: ActionTypes.ARTICLE; payload: { newValue: BlogArticle; i: number; j: number } }
+  | {
+      type: ActionTypes.ARTICLE;
+      payload: { newValue: BlogArticle; i: number; j: number };
+    }
   | { type: ActionTypes.ALL_ACRTICLES; payload: { newValue: BlogArticle[]; i: number } }
   | { type: ActionTypes.IMAGE; payload: { newValue: any; i: number } }
-  | { type: ActionTypes.FINAL_DATA; payload: { authorUID: string; tags: string[]; timestamp: number } };
+  | {
+      type: ActionTypes.FINAL_DATA;
+      payload: { authorUID: string; tags: string[]; timestamp: number };
+    };
 
 // przykładowy artykuł
 const DEFAULT_ARTICLE: BlogArticle = {
@@ -33,7 +40,8 @@ const DEFAULT_ARTICLE: BlogArticle = {
 const DEFAULT_SECTION: BlogSection = {
   title: "Propsy są niemutowalne",
   articles: [DEFAULT_ARTICLE, DEFAULT_ARTICLE],
-  image: null,
+  image:
+    "https://images.unsplash.com/photo-1536532184021-da5392b55da1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Ymx1ZSUyMHNreXxlbnwwfHwwfHw%3D&w=1000&q=80",
 };
 
 // przykładowy komentarz
@@ -52,7 +60,7 @@ const initialState: Blog = {
   description: "Opis bloga...",
   image:
     "https://cdn.corporate.walmart.com/dims4/WMT/572511c/2147483647/strip/true/crop/1920x1066+0+7/resize/980x544!/quality/90/?url=https%3A%2F%2Fcdn.corporate.walmart.com%2F7b%2F66%2F142c151b4cd3a19c13e1ca65f193%2Fbusinessfornature-banner.png",
-  content: [DEFAULT_SECTION],
+  content: [DEFAULT_SECTION, DEFAULT_SECTION],
   authorUID: "1",
   tags: ["Tory", "Nauka"],
   likes: ["uid_1", "uid_2"],
@@ -87,7 +95,9 @@ const blogReducer = (state: Blog, action: BlogAction) => {
     case ActionTypes.TITLE:
       return {
         ...state,
-        content: state.content.map((s, i) => (i == payload.i ? { ...s, title: payload.newValue } : s)),
+        content: state.content.map((s, i) =>
+          i == payload.i ? { ...s, title: payload.newValue } : s
+        ),
       };
     // zawartość konkretnego artykułu
     case ActionTypes.ARTICLE:
@@ -97,7 +107,9 @@ const blogReducer = (state: Blog, action: BlogAction) => {
           i == payload.i
             ? {
                 ...s,
-                articles: s.articles.map((a, j) => (j == payload.j ? payload.newValue : a)),
+                articles: s.articles.map((a, j) =>
+                  j == payload.j ? payload.newValue : a
+                ),
               }
             : s
         ),
@@ -106,13 +118,17 @@ const blogReducer = (state: Blog, action: BlogAction) => {
     case ActionTypes.ALL_ACRTICLES:
       return {
         ...state,
-        content: state.content.map((s, i) => (i == payload.i ? { ...s, articles: payload.newValue } : s)),
+        content: state.content.map((s, i) =>
+          i == payload.i ? { ...s, articles: payload.newValue } : s
+        ),
       };
     // zdjęcie konkretnej sekcji
     case ActionTypes.IMAGE:
       return {
         ...state,
-        content: state.content.map((s, i) => (i == payload.i ? { ...s, image: payload.newValue } : s)),
+        content: state.content.map((s, i) =>
+          i == payload.i ? { ...s, image: payload.newValue } : s
+        ),
       };
     // ostateczne dane do bloga
     case ActionTypes.FINAL_DATA:
@@ -127,4 +143,14 @@ const blogReducer = (state: Blog, action: BlogAction) => {
   }
 };
 
-export { initialState, blogReducer, ActionTypes };
+interface BlogContextType {
+  blog: Blog;
+  dispatch: Dispatch<BlogAction>;
+}
+
+const BlogContext = createContext<BlogContextType>({
+  blog: initialState,
+  dispatch: () => null,
+});
+
+export { initialState, blogReducer, ActionTypes, BlogContext };

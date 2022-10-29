@@ -123,3 +123,41 @@
 .user-menu a:hover {
     text-decoration: underline;
 }
+.nav-dev {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4rem;
+    width: 100%;
+    color: var(--black);
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    transition-duration: 200ms;
+}
+.nav-dev .logo {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: large;
+    font-weight: 600;
+    cursor: pointer;
+}
+.nav-dev .logo span {
+    font-weight: 300;
+}
+.nav-dev .right-side {
+    display: flex;
+    align-items: center;
+}
+.nav-dev .right-side img {
+    border-radius: 9999px;
+    height: 2.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+    border: 2px solid transparent !important;
+    transition-duration: 100ms;
+}
+.nav-dev .right-side img:hover {
+    border-color: var(--dark )!important;
+}

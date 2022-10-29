@@ -6,6 +6,7 @@ import {
   ComputerDesktopIcon,
   MagnifyingGlassIcon,
   Bars3Icon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { signOut } from "firebase/auth";
@@ -39,7 +40,7 @@ export const Normal = ({ transparent = false }: NormalProps) => {
       className={`nav-normal ${shouldTransparent && transparent ? "transparent" : ""}`}
     >
       {/* logo */}
-      <Link href={"/1"}>
+      <Link href={"/"}>
         <div className="logo">
           <ComputerDesktopIcon className="h-7" />
           <h1>Szybki blog</h1>
@@ -58,9 +59,9 @@ export const Normal = ({ transparent = false }: NormalProps) => {
         </li>
       </ul>
       {/* right side */}
-      {user ? (
-        <div className="right-side">
-          <MagnifyingGlassIcon className="h-8 cursor-pointer" />
+      <div className="right-side">
+        <MagnifyingGlassIcon className="h-8 cursor-pointer" />
+        {user ? (
           <Image
             src={user.photoURL}
             onClick={() => setShow(show => !show)}
@@ -68,38 +69,101 @@ export const Normal = ({ transparent = false }: NormalProps) => {
             height={40}
             width={40}
           />
-          <Bars3Icon
-            className="h-9 cursor-pointer  min-[900px]:hidden"
-            onClick={() => setToggled(toggled => !toggled)}
-          />
-          {show && (
-            <div className="user-menu">
-              <div className="text-slate-800">
-                <p>{user.displayName}</p>
-                <p>{user.email}</p>
-              </div>
-              <div className="menu-links">
-                <Link href={"/"}>Dashboard</Link>
-                <Link href={"/"}>Ustawienia</Link>
-              </div>
-              <p
-                onClick={async () => await signOut(auth)}
-                className="text-black text-center cursor-pointer"
-              >
-                Wyloguj się
-              </p>
+        ) : (
+          <p className="my-auto">
+            <Link href={"/login"}>Zaloguj się</Link>
+          </p>
+        )}
+
+        {/* user menu */}
+        {show && user && (
+          <div className="user-menu">
+            <div className="text-slate-800">
+              <p>{user.displayName}</p>
+              <p>{user.email}</p>
             </div>
-          )}
-        </div>
-      ) : (
+            <div className="menu-links">
+              <Link href={"/"}>Dashboard</Link>
+              <Link href={"/"}>Ustawienia</Link>
+            </div>
+            <p
+              onClick={async () => await signOut(auth)}
+              className="text-black text-center cursor-pointer"
+            >
+              Wyloguj się
+            </p>
+          </div>
+        )}
         <button className="flex items-center gap-3">
-          <Link href={"/login"}>Zaloguj się</Link>
-          <Bars3Icon
-            className="h-9 cursor-pointer  min-[900px]:hidden"
-            onClick={() => setToggled(toggled => !toggled)}
-          />
+          {!toggled ? (
+            <Bars3Icon
+              className="h-9 cursor-pointer  min-[900px]:hidden"
+              onClick={() => setToggled(toggled => !toggled)}
+            />
+          ) : (
+            <XMarkIcon
+              className="h-9 cursor-pointer  min-[900px]:hidden"
+              onClick={() => setToggled(toggled => !toggled)}
+            />
+          )}
         </button>
-      )}
+      </div>
+      {/* menu toggle */}
+      {/* )} */}
+    </nav>
+  );
+};
+
+export const Dev = () => {
+  const user = useAuthUser();
+
+  const [show, setShow] = useState(false);
+
+  const router = useRouter();
+
+  return (
+    <nav className="nav-dev">
+      {/* logo */}
+      <Link href={"/"}>
+        <div className="logo">
+          <ComputerDesktopIcon className="h-8" />
+          <h1>Szybki blog</h1>
+          <span>Dev</span>
+        </div>
+      </Link>
+
+      {/* right side */}
+      <div className="right-side">
+        {user && (
+          <Image
+            src={user.photoURL}
+            onClick={() => setShow(show => !show)}
+            alt="profile-image"
+            height={40}
+            width={40}
+          />
+        )}
+
+        {/* user menu */}
+        {show && user && (
+          <div className="user-menu">
+            <div className="text-slate-800">
+              <p>{user.displayName}</p>
+              <p>{user.email}</p>
+            </div>
+            <div className="menu-links">
+              <Link href={"/"}>Dashboard</Link>
+              <Link href={"/"}>Ustawienia</Link>
+            </div>
+            <p
+              onClick={async () => await signOut(auth)}
+              className="text-black text-center cursor-pointer"
+            >
+              Wyloguj się
+            </p>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };

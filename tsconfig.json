@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "ts/useMouseMove.sx"  ],
   "exclude": [
     "node_modules"
   ]

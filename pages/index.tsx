@@ -45,9 +45,9 @@ const Home = () => {
           </div>
         </section>
         <section className="third-section">
-          <p>
+          <pre>
             <span>Szybki blog</span> - wszystkie prawa zastrzeżone
-          </p>
+          </pre>
         </section>
       </main>
     </>

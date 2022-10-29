@@ -186,7 +186,9 @@
     justify-content: center;
     padding-bottom: 5rem;
 }
-#home .third-section p {
+#home .third-section pre {
+    display: flex;
+    font-family: 'Poppins', sans-serif;
     font-weight: 200;
 }
 #home .third-section span {
