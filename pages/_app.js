@@ -7,6 +7,7 @@ import "../styles/nav.css";
 import "../styles/home.css";
 import "../styles/blog.css";
 import "../styles/editor.css";
+import "../styles/selection-bar.css";
 
 import { BlogContext, initialState, blogReducer } from "../ts/blogReducer";
 import { useReducer } from "react";

@@ -1,0 +1,8 @@
+#selection-bar {
+    padding: .5rem 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    background-color: var(--light-gray);
+    border-bottom: 1px solid var(--gray);
+}

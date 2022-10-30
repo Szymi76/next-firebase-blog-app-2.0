@@ -5,6 +5,7 @@ import { ActionTypes, BlogContext } from "../ts/blogReducer";
 import { PencilIcon } from "@heroicons/react/24/outline";
 import * as Button from "../components/Button";
 import Blog from "../components/Blog";
+import Form from "../components/Form";
 
 const Edytor = () => {
   const [hold, event] = useMouseHold("resizer");
@@ -17,7 +18,7 @@ const Edytor = () => {
     setWidth(widthCorrection(event));
   }, [event]);
 
-  console.log(blog);
+  // console.log(blog);
 
   return (
     <>
@@ -39,7 +40,9 @@ const Edytor = () => {
             </div>
           </section>
           <section id="container" className="resizer">
-            <div id="form" style={{ width: `${width}%` }}></div>
+            <div id="form" style={{ width: `${width}%` }}>
+              <Form />
+            </div>
             <div id="resizer"></div>
             <div id="blog-editor" style={{ width: `${100 - width}%` }}>
               <Blog blog={blog} />

@@ -6,6 +6,7 @@ enum ActionTypes {
   BLOG_TITLE = "BLOG_TITLE", // title
   BLOG_DESCRIPTION = "DESCRIPTION", // description
   BLOG_IMAGE = "BLOG_IMAGE", // image
+  ALL_SECTIONS = "ALL_SECTIONS", // content all sections
   TITLE = "TITLE", // section title
   ARTICLE = "ARTICLE", // section one article
   ALL_ACRTICLES = "FULL_ARTICLES", // section all articles
@@ -18,6 +19,7 @@ type BlogAction =
   | { type: ActionTypes.BLOG_TITLE; payload: string }
   | { type: ActionTypes.BLOG_DESCRIPTION; payload: string }
   | { type: ActionTypes.BLOG_IMAGE; payload: string }
+  | { type: ActionTypes.ALL_SECTIONS; payload: BlogSection[] }
   | { type: ActionTypes.TITLE; payload: { newValue: string; i: number } }
   | {
       type: ActionTypes.ARTICLE;
@@ -91,6 +93,12 @@ const blogReducer = (state: Blog, action: BlogAction) => {
         ...state,
         image: payload,
       };
+    // zawartość całego kontentu
+    case ActionTypes.ALL_SECTIONS:
+      return {
+        ...state,
+        content: payload,
+      };
     // tytuł konkretnej sekcji
     case ActionTypes.TITLE:
       return {
@@ -153,4 +161,11 @@ const BlogContext = createContext<BlogContextType>({
   dispatch: () => null,
 });
 
-export { initialState, blogReducer, ActionTypes, BlogContext };
+export {
+  initialState,
+  blogReducer,
+  ActionTypes,
+  BlogContext,
+  DEFAULT_SECTION,
+  DEFAULT_ARTICLE,
+};

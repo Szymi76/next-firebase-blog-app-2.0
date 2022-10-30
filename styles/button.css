@@ -17,10 +17,14 @@
 
 /* outlined  */
 .button-outlined {
-    padding: .15rem 1.25rem;
+    padding: .25rem 1.25rem;
     border-radius: var(--radius);
     outline: none;
     transition-duration: 100ms;
+    font-size: small;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
 }
 
 .button-outlined:hover, .button-solid:focus {
@@ -41,4 +45,9 @@
     border: 1px solid #22c55e;
     background-color: #dcfce7;
     color: #22c55e;
+}
+.button-gray {
+    border: 1px solid var(--gray);
+    background-color: var(--white);
+    color: var(--black);
 }
