@@ -20,8 +20,18 @@ const Blog = ({ blog }: BlogProps) => {
       <h1 id="title">{blog.title}</h1>
       <p id="description">{blog.description}</p>
       <div className="relative grid place-items-center h-full overflow-hidden max-h-[400px]">
-        <img src={blog.image} className="absolute top-0 left-0 w-full -z-10 blur-lg " />
-        <img src={blog.image} className="max-h-[400px]" />
+        <img
+          src={
+            typeof blog.image == "string" ? blog.image : URL.createObjectURL(blog.image)
+          }
+          className="absolute top-0 left-0 w-full -z-10 blur-lg "
+        />
+        <img
+          src={
+            typeof blog.image == "string" ? blog.image : URL.createObjectURL(blog.image)
+          }
+          className="max-h-[400px]"
+        />
       </div>
       <div id="bottom-info">
         <div>

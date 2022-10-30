@@ -6,6 +6,9 @@ import { PencilIcon } from "@heroicons/react/24/outline";
 import * as Button from "../components/Button";
 import Blog from "../components/Blog";
 import Form from "../components/Form";
+import { useAuthUser } from "../firebase/auth-hooks";
+import { Oval } from "react-loader-spinner";
+import { useRouter } from "next/router";
 
 const Edytor = () => {
   const [hold, event] = useMouseHold("resizer");
@@ -13,43 +16,63 @@ const Edytor = () => {
 
   const { blog, dispatch } = useContext(BlogContext);
 
+  const user = useAuthUser();
+
+  const router = useRouter();
+
   useEffect(() => {
     if (!event) return;
     setWidth(widthCorrection(event));
   }, [event]);
 
-  // console.log(blog);
+  useEffect(() => {
+    if (user === null) router.replace("/login");
+  }, [user]);
 
   return (
     <>
       <Nav.Dev />
-      <main id="editor-wrapper">
-        <div id="editor">
-          <section id="editor-title">
-            <h1>{blog.title}</h1>
-            <PencilIcon className="h-6" />
-          </section>
-          <section id="options">
-            <div>
-              <Button.Solid className="editor-button" children="Editor max" />
-              <Button.Solid className="editor-button" children="Editor min" />
-            </div>
-            <div>
-              <Button.Solid className="editor-button" children="Zapisz" />
-              <Button.Solid className="editor-button" children="Wyślij" />
-            </div>
-          </section>
-          <section id="container" className="resizer">
-            <div id="form" style={{ width: `${width}%` }}>
-              <Form />
-            </div>
-            <div id="resizer"></div>
-            <div id="blog-editor" style={{ width: `${100 - width}%` }}>
-              <Blog blog={blog} />
-            </div>
-          </section>
+      {user ? (
+        <main id="editor-wrapper">
+          <div id="editor">
+            <section id="editor-title">
+              <h1>{blog.title}</h1>
+              <PencilIcon className="h-6" />
+            </section>
+            <section id="options">
+              <div>
+                <Button.Solid
+                  className="editor-button"
+                  children="Editor max"
+                  onClick={() => setWidth(100)}
+                />
+                <Button.Solid
+                  className="editor-button"
+                  children="Editor min"
+                  onClick={() => setWidth(0)}
+                />
+              </div>
+              <div>
+                <Button.Solid className="editor-button" children="Zapisz" />
+                <Button.Solid className="editor-button" children="Prześlj" />
+              </div>
+            </section>
+            <section id="container" className="resizer">
+              <div id="form" style={{ width: `${width}%` }}>
+                <Form />
+              </div>
+              <div id="resizer"></div>
+              <div id="blog-editor" style={{ width: `${100 - width}%` }}>
+                <Blog blog={blog} />
+              </div>
+            </section>
+          </div>
+        </main>
+      ) : (
+        <div className="w-full h-[50vh] grid place-content-center">
+          <Oval color="#7f56d9" secondaryColor="#7f56d9" strokeWidth={3} height={75} />
         </div>
-      </main>
+      )}
     </>
   );
 };

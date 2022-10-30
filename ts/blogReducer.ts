@@ -18,7 +18,7 @@ enum ActionTypes {
 type BlogAction =
   | { type: ActionTypes.BLOG_TITLE; payload: string }
   | { type: ActionTypes.BLOG_DESCRIPTION; payload: string }
-  | { type: ActionTypes.BLOG_IMAGE; payload: string }
+  | { type: ActionTypes.BLOG_IMAGE; payload: any }
   | { type: ActionTypes.ALL_SECTIONS; payload: BlogSection[] }
   | { type: ActionTypes.TITLE; payload: { newValue: string; i: number } }
   | {

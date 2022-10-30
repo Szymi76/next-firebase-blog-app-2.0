@@ -5,7 +5,7 @@ import { CloudArrowDownIcon } from "@heroicons/react/24/outline";
 interface NormalProps {
   type: "email" | "text" | "password";
   placeholder: string;
-  value: string | number;
+  value?: string | number;
   className?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
@@ -45,3 +45,8 @@ export const File = ({ children, onChange }: FileProps) => {
     </div>
   );
 };
+
+// textarea
+// interface TextareaProps {
+
+// }

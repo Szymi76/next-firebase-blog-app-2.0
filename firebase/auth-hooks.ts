@@ -51,7 +51,7 @@ const authReducer = (state: AuthState, type: ActionTypes) => {
 
 // hook z aktualnych użytkownikiem
 const useAuthUser = () => {
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<User>(undefined);
 
   useEffect(() => {
     let unsubscribe: Unsubscribe;

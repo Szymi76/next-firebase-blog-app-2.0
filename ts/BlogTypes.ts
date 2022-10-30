@@ -20,7 +20,7 @@ interface BlogComment {
 interface Blog {
   title: string;
   description: string;
-  image: string;
+  image: any;
   content: BlogSection[];
   tags: string[];
   likes: string[];

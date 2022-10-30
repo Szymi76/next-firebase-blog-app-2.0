@@ -1,0 +1,17 @@
+#form {
+    margin-bottom: 6.5rem;
+    background-color: var(--light-gray);
+}
+#editor-form {
+    background-color: var(--light-gray);
+    height: 100%;
+    /* padding-bottom: 10rem; */
+}
+#introduction {
+    background-color: var(--light-gray);
+    height: 100%;
+}
+.form-container {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray);
+}

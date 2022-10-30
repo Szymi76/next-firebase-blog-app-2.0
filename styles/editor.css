@@ -44,7 +44,7 @@
 #editor #container #blog-editor {
     display: flex;
     justify-content: center;
-    margin-bottom: 7rem;
+    margin-bottom: 6.5rem;
 }
 #resizer {
     width: 3px;
