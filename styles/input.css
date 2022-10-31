@@ -83,7 +83,6 @@
 }
 .input-with-label p {
     color: var(--dark-gray);
-    border-right: 1px solid var(--gray);
     padding: .5rem 1.25rem;
 }
 .input-with-label input {
@@ -92,4 +91,15 @@
     outline: none;
     padding: .5rem 1.25rem;
     font-weight: 500;
+    border-left: 1px solid var(--gray);
+}
+
+@media (max-width: 750px) {
+    .input-with-label {
+        flex-direction: column;
+    }
+    .input-with-label input {
+        border-left: none;
+        border-top: 1px solid var(--gray);
+    }
 }

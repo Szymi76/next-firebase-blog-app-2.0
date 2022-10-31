@@ -123,10 +123,13 @@
 .user-menu a:hover {
     text-decoration: underline;
 }
+
+/* nav dev */
 .nav-dev {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 30;
     height: 4rem;
     width: 100%;
     color: var(--black);

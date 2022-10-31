@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useReducer } from "react";
+import { BlogContext, initialState, blogReducer } from "../ts/blogReducer";
 
 import "../styles/global.css";
 import "../styles/input.css";
@@ -10,9 +11,6 @@ import "../styles/editor.css";
 import "../styles/selection-bar.css";
 import "../styles/form.css";
 import "../styles/summary.css";
-
-import { BlogContext, initialState, blogReducer } from "../ts/blogReducer";
-import { useReducer } from "react";
 
 function MyApp({ Component, pageProps }) {
   const [blog, dispatch] = useReducer(blogReducer, initialState);

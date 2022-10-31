@@ -33,3 +33,13 @@
     padding: 1.25rem 0;
     border-bottom: 1px solid var(--gray);
 }
+
+.summary-tag {
+    background-color: var(--gray);
+    padding: .15rem 1rem;
+    border: 1px solid var(--darker-gray);
+    border-radius: 9999px;
+    color: var(--dark-gray);
+    font-weight: 300;
+    font-size: small;
+}

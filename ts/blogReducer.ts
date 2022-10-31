@@ -9,8 +9,9 @@ enum ActionTypes {
   ALL_SECTIONS = "ALL_SECTIONS", // content all sections
   TITLE = "TITLE", // section title
   ARTICLE = "ARTICLE", // section one article
-  ALL_ACRTICLES = "FULL_ARTICLES", // section all articles
+  ALL_ACRTICLES = "ALL_ARTICLES", // section all articles
   IMAGE = "IMAGE", // section image
+  TAGS = "TAGS", // tags
   FINAL_DATA = "FINAL_DATA", // authorUID, tags, timestamp
 }
 
@@ -27,6 +28,7 @@ type BlogAction =
     }
   | { type: ActionTypes.ALL_ACRTICLES; payload: { newValue: BlogArticle[]; i: number } }
   | { type: ActionTypes.IMAGE; payload: { newValue: any; i: number } }
+  | { type: ActionTypes.TAGS; payload: string[] }
   | {
       type: ActionTypes.FINAL_DATA;
       payload: { authorUID: string; tags: string[]; timestamp: number };
@@ -137,6 +139,12 @@ const blogReducer = (state: Blog, action: BlogAction) => {
         content: state.content.map((s, i) =>
           i == payload.i ? { ...s, image: payload.newValue } : s
         ),
+      };
+    // tagi
+    case ActionTypes.TAGS:
+      return {
+        ...state,
+        tags: payload,
       };
     // ostateczne dane do bloga
     case ActionTypes.FINAL_DATA:

@@ -5,9 +5,10 @@
     color: var(--white);
     border: 1px solid var(--light-violet);
     border-radius: var(--radius);
-    font-size: large;
     outline: none;
     transition-duration: 100ms;
+    display: grid;
+    place-content: center;
 }
 
 .button-solid:hover, .button-solid:focus {
