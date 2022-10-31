@@ -9,10 +9,12 @@ import Form from "../components/Form";
 import { useAuthUser } from "../firebase/auth-hooks";
 import { Oval } from "react-loader-spinner";
 import { useRouter } from "next/router";
+import Modal from "../components/Modal";
 
 const Edytor = () => {
   const [hold, event] = useMouseHold("resizer");
   const [width, setWidth] = useState(50);
+  const [showModal, setShowModal] = useState(false);
 
   const { blog, dispatch } = useContext(BlogContext);
 
@@ -54,7 +56,11 @@ const Edytor = () => {
               </div>
               <div>
                 <Button.Solid className="editor-button" children="Zapisz" />
-                <Button.Solid className="editor-button" children="Prześlj" />
+                <Button.Solid
+                  className="editor-button"
+                  children="Prześlj"
+                  onClick={() => setShowModal(true)}
+                />
               </div>
             </section>
             <section id="container" className="resizer">
@@ -73,6 +79,16 @@ const Edytor = () => {
           <Oval color="#7f56d9" secondaryColor="#7f56d9" strokeWidth={3} height={75} />
         </div>
       )}
+      <Modal
+        label={
+          <p className="font-semibold pb-3 text-lg">
+            Czy na pewno chcesz przejść do podsumowania?
+          </p>
+        }
+        show={showModal}
+        onCancel={() => setShowModal(false)}
+        onConfirm={() => router.push("/podsumowanie")}
+      />
     </>
   );
 };

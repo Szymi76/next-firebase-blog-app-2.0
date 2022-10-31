@@ -9,6 +9,7 @@ import "../styles/blog.css";
 import "../styles/editor.css";
 import "../styles/selection-bar.css";
 import "../styles/form.css";
+import "../styles/summary.css";
 
 import { BlogContext, initialState, blogReducer } from "../ts/blogReducer";
 import { useReducer } from "react";
