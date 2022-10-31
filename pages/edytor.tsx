@@ -50,6 +50,11 @@ const Edytor = () => {
                 />
                 <Button.Solid
                   className="editor-button"
+                  children="50 / 50"
+                  onClick={() => setWidth(50)}
+                />
+                <Button.Solid
+                  className="editor-button"
                   children="Editor min"
                   onClick={() => setWidth(0)}
                 />

@@ -13,6 +13,7 @@ import Modal from "../components/Modal";
 import { uploadContentImages, uploadFile } from "../firebase/functions";
 import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../firebase/firebase";
+import { Blog as BlogType } from "../ts/BlogTypes";
 
 const Summary = () => {
   const { blog, dispatch } = useContext(BlogContext);
@@ -55,20 +56,32 @@ const Summary = () => {
     const titleImage = await uploadFile(blog.image, linkName + "_main");
     const blogRef = doc(db, "blogs", linkName);
 
-    dispatch({ type: ActionTypes.BLOG_IMAGE, payload: titleImage });
+    // dispatch({ type: ActionTypes.BLOG_IMAGE, payload: titleImage });
 
-    blog.content.forEach((section, i) => {
-      dispatch({ type: ActionTypes.IMAGE, payload: { newValue: urls[i], i: i } });
-    });
+    // blog.content.forEach((section, i) => {
+    //   dispatch({ type: ActionTypes.IMAGE, payload: { newValue: urls[i], i: i } });
+    // });
 
-    dispatch({
-      type: ActionTypes.FINAL_DATA,
-      payload: { authorUID: user.uid, tags: blog.tags, timestamp: +new Date() },
-    });
+    // dispatch({
+    //   type: ActionTypes.FINAL_DATA,
+    //   payload: { authorUID: user.uid, tags: blog.tags, timestamp: +new Date() },
+    // });
 
-    const blogCopy = { ...blog };
+    const blogObj: BlogType = {
+      ...blog,
+      content: blog.content.map((s, i) => {
+        return { ...s, image: urls[i] };
+      }),
+      image: titleImage,
+      authorUID: user.uid,
+      timestamp: +new Date(),
+      linkName: linkName,
+    };
 
-    await setDoc(blogRef, blogCopy)
+    // DEBUG
+    console.log(blogObj);
+
+    await setDoc(blogRef, blogObj)
       .then(() => {
         setLoading(false);
       })

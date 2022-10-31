@@ -49,10 +49,10 @@ export const Normal = ({ transparent = false }: NormalProps) => {
       {/* links */}
       <ul className={`links ${toggled ? "toggled" : ""}`}>
         <li>
-          <Link href={"/"}>Stwórz blog</Link>
+          <Link href={"/edytor"}>Stwórz blog</Link>
         </li>
         <li>
-          <Link href={"/"}>Blogi</Link>
+          <Link href={"/blogi"}>Blogi</Link>
         </li>
         <li>
           <Link href={"/"}>Inspiracje</Link>

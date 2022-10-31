@@ -24,6 +24,7 @@ const uploadContentImages = async (name: string, images: any[]) => {
  */
 const uploadFile = async (file: any, fileName: string) => {
   if (!file) return null;
+  if (typeof file == "string") return file;
   const imageRef = ref(storage, fileName);
   const upload = await uploadBytes(imageRef, file);
   return await getDownloadURL(upload.ref);
