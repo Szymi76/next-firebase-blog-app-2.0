@@ -53,7 +53,7 @@
     width: 100%;
     object-fit: contain;
 }
-#blog #copy-button {
+#copy-button {
     display: flex;
     align-items: center;
     gap: .5rem;
@@ -64,7 +64,7 @@
     transition-duration: 100ms;
     float: right;
 }
-#blog #copy-button:hover {
+#copy-button:hover {
     background-color: var(--dark);
     color: var(--white);
 }
@@ -73,7 +73,11 @@
     width: 100%;
     background-color: var(--dark);
 }
-
+#blog-actions {
+    width: 900px;
+    margin: 0 auto;
+    padding-bottom: 10rem;
+}
 #blog-footer {
     height: 15rem;
     background-color: var(--dark);
