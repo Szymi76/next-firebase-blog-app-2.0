@@ -27,9 +27,21 @@ const Summary = () => {
   const tagInputRef = useRef<HTMLInputElement>();
   const linkNameInputRef = useRef<HTMLInputElement>();
 
+  // przekierowanie niezalogowanego użytkownika
   useEffect(() => {
-    if (user === null) router.replace("/login");
+    if (user === null) router.replace("/zaloguj-sie");
   }, [user]);
+
+  // zapobieganie przed odświeżeniem strony
+  useEffect(() => {
+    const handleBeforeunload = e => {
+      e.preventDefault();
+      return (e.returnValue = "");
+    };
+
+    window.addEventListener("beforeunload", handleBeforeunload);
+    return () => window.removeEventListener("beforeunload", handleBeforeunload);
+  }, []);
 
   // usuwanie taga
   const handleTagRemove = (index: number) => {
@@ -84,6 +96,7 @@ const Summary = () => {
     await setDoc(blogRef, blogObj)
       .then(() => {
         setLoading(false);
+        router.push("/");
       })
       .catch(err => {
         setLoading(false);
@@ -108,7 +121,7 @@ const Summary = () => {
               </div>
               {/* link */}
               <div className="summary-row flex ">
-                <p className="text-gray-500 min-w-[25%]">Nazwa widoczna linku</p>
+                <p className="text-gray-500 min-w-[25%]">Nazwa widoczna w linku</p>
                 <div className="input-with-label max-w-2xl h-min">
                   {/* <p>{`${location.origin}/blog/`}</p> */}
                   <p>{`http://localhost:3000/blog/`}</p>

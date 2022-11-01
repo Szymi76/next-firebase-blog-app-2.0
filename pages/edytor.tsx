@@ -22,14 +22,26 @@ const Edytor = () => {
 
   const router = useRouter();
 
+  // ustawianie % długości podczas ruszaniem resizerem
   useEffect(() => {
     if (!event) return;
     setWidth(widthCorrection(event));
   }, [event]);
 
   useEffect(() => {
-    if (user === null) router.replace("/login");
+    if (user === null) router.replace("/zaloguj-sie");
   }, [user]);
+
+  // zapobieganie przed odświeżeniem strony
+  useEffect(() => {
+    const handleBeforeunload = e => {
+      e.preventDefault();
+      return (e.returnValue = "");
+    };
+
+    window.addEventListener("beforeunload", handleBeforeunload);
+    return () => window.removeEventListener("beforeunload", handleBeforeunload);
+  }, []);
 
   return (
     <>

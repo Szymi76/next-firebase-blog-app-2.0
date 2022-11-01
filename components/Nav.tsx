@@ -25,6 +25,8 @@ export const Normal = ({ transparent = false }: NormalProps) => {
 
   const router = useRouter();
 
+  // console.log(user);
+
   useEffect(() => {
     const handleScroll = () => {
       window.scrollY > 0 ? setShouldTransparent(false) : setShouldTransparent(true);
@@ -63,7 +65,7 @@ export const Normal = ({ transparent = false }: NormalProps) => {
         <MagnifyingGlassIcon className="h-8 cursor-pointer" />
         {user ? (
           <Image
-            src={user.photoURL}
+            src={user?.photoURL}
             onClick={() => setShow(show => !show)}
             alt="profile-image"
             height={40}
@@ -71,7 +73,7 @@ export const Normal = ({ transparent = false }: NormalProps) => {
           />
         ) : (
           <p className="my-auto">
-            <Link href={"/login"}>Zaloguj się</Link>
+            <Link href={"/zaloguj-sie"}>Zaloguj się</Link>
           </p>
         )}
 

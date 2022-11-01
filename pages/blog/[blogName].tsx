@@ -41,7 +41,20 @@ const BlogPage = () => {
   return (
     <>
       <Nav.Normal />
-      {blog ? <Blog blog={blog} /> : <Oval />}
+      {blog ? (
+        <>
+          <Blog blog={blog} />
+          <section id="blog-footer">
+            <pre>
+              <span>Szybki blog</span> - wszystkie prawa zastrzeżone
+            </pre>
+          </section>
+        </>
+      ) : (
+        <div className="w-full h-[50vh] grid place-content-center">
+          <Oval color="#7f56d9" secondaryColor="#7f56d9" strokeWidth={3} height={75} />
+        </div>
+      )}
     </>
   );
 };

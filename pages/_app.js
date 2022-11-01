@@ -11,6 +11,8 @@ import "../styles/editor.css";
 import "../styles/selection-bar.css";
 import "../styles/form.css";
 import "../styles/summary.css";
+import "../styles/tests.css";
+import "../styles/auth.css";
 
 function MyApp({ Component, pageProps }) {
   const [blog, dispatch] = useReducer(blogReducer, initialState);
