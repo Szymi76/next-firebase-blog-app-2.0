@@ -123,8 +123,8 @@ const Summary = () => {
               <div className="summary-row flex ">
                 <p className="text-gray-500 min-w-[25%]">Nazwa widoczna w linku</p>
                 <div className="input-with-label max-w-2xl h-min">
-                  {/* <p>{`${location.origin}/blog/`}</p> */}
-                  <p>{`http://localhost:3000/blog/`}</p>
+                  <p>{`${location.origin}/blog/`}</p>
+                  {/* <p>{`http://localhost:3000/blog/`}</p> */}
                   <input type="text" ref={linkNameInputRef} />
                 </div>
               </div>
