@@ -13,6 +13,7 @@ import "../styles/form.css";
 import "../styles/summary.css";
 import "../styles/tests.css";
 import "../styles/auth.css";
+import "../styles/blogs.css";
 
 function MyApp({ Component, pageProps }) {
   const [blog, dispatch] = useReducer(blogReducer, initialState);

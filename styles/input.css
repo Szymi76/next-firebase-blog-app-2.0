@@ -8,6 +8,7 @@
     font-weight: 400;
     outline: none;
     transition-duration: 50ms;
+    white-space: nowrap;
 }
 .input-normal:focus {
     border: 2px solid var(--violet);
@@ -101,4 +102,20 @@
         border-left: none;
         border-top: 1px solid var(--gray);
     }
+}
+
+/* input with icon */
+.input-with-icon {
+    border: 1px solid var(--gray);
+    border-radius: var(--radius);
+    padding: .25rem .75rem;
+}
+.input-with-icon input {
+    height: 100%;
+    outline: none;
+    margin-left: .25rem;
+}
+.input-with-icon input::placeholder {
+    font-weight: 300;
+    color: var(--dark-gray);
 }

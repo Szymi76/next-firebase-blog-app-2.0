@@ -1,6 +1,6 @@
 /* solid */
 .button-solid {
-    padding: 0.5rem 1.75rem;
+    padding: 0.5rem 1rem;
     background-color: var(--violet);
     color: var(--white);
     border: 1px solid var(--light-violet);
@@ -9,10 +9,21 @@
     transition-duration: 100ms;
     display: grid;
     place-content: center;
+    font-weight: 400;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    height: 42px;
+    white-space: nowrap;
 }
-
 .button-solid:hover, .button-solid:focus {
     filter: brightness(90%);
+}
+.button-white {
+    color: var(--black) !important;
+    background-color: var(--white) !important;
+    border-color: var(--gray) !important;
 }
 
 
