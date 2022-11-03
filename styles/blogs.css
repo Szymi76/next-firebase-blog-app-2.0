@@ -12,11 +12,16 @@
     gap: .5rem;
 }
 .tag {
+    display: flex;
+    gap: 1rem;
     background-color: var(--light-gray);
     color: var(--dark-gray);
     font-size: small;
     padding: .25rem 1.25rem;
     border-radius: 9999px;
+}
+.tag span {
+    white-space: nowrap;
 }
 
 @media (max-width: 1050px) {

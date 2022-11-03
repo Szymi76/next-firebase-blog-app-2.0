@@ -34,7 +34,7 @@ const Home = () => {
             className="h-screen object-cover w-full"
             alt="computer-image"
           />
-          <div>
+          <div id="text">
             <h1>Stwórz swój własny blog już dziś.</h1>
             <p>Wspiera cię kadra niezastapionych eksperów we wszystkich dziedzinach</p>
             <button onClick={() => router.push("/edytor")}>

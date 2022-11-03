@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 import { signOut } from "firebase/auth";
 import Image from "next/image";
+import Search from "./Search";
 
 interface NormalProps {
   transparent?: boolean;
@@ -22,10 +23,9 @@ export const Normal = ({ transparent = false }: NormalProps) => {
   const [toggled, setToggled] = useState(false);
   const [shouldTransparent, setShouldTransparent] = useState(true);
   const [show, setShow] = useState(false);
+  const [search, setSearch] = useState(false);
 
   const router = useRouter();
-
-  // console.log(user);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,7 +62,10 @@ export const Normal = ({ transparent = false }: NormalProps) => {
       </ul>
       {/* right side */}
       <div className="right-side">
-        <MagnifyingGlassIcon className="h-8 cursor-pointer" />
+        <MagnifyingGlassIcon
+          className="h-8 cursor-pointer"
+          onClick={() => setSearch(search => !search)}
+        />
         {user ? (
           <Image
             src={user?.photoURL}
@@ -81,8 +84,8 @@ export const Normal = ({ transparent = false }: NormalProps) => {
         {show && user && (
           <div className="user-menu">
             <div className="text-slate-800">
-              <p>{user.displayName}</p>
-              <p>{user.email}</p>
+              <p>{user?.displayName}</p>
+              <p>{user?.email}</p>
             </div>
             <div className="menu-links">
               <Link href={"/"}>Dashboard</Link>
@@ -96,6 +99,7 @@ export const Normal = ({ transparent = false }: NormalProps) => {
             </p>
           </div>
         )}
+        {search && <Search />}
         <button className="flex items-center gap-3">
           {!toggled ? (
             <Bars3Icon

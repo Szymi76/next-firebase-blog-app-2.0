@@ -7,6 +7,7 @@ import {
   MagnifyingGlassIcon,
   BarsArrowDownIcon,
   BarsArrowUpIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Blog } from "../ts/BlogTypes";
 
@@ -30,23 +31,27 @@ const Blogs = () => {
 
   const tagInputRef = useRef<HTMLInputElement>();
 
+  // aktualizacja filtrowanych blogów podczas zmiany filtrów
   const filteredBlogs = useMemo(() => {
-    const b1 = blogs.filter(b => b.title.includes(filters.query));
+    const b1 = blogs.filter(b =>
+      b.title.toLocaleLowerCase().includes(filters.query.toLocaleLowerCase())
+    );
     const b2 = b1.filter(b => filters.tags.every(t => b.tags.includes(t)));
     const b3 =
       filters.likesASC !== null
         ? filters.likesASC
-          ? b2.sort((a, b) => b.likes.length - a.likes.length)
-          : b2.sort((a, b) => a.likes.length - b.likes.length)
+          ? b2.sort((a, b) => a.likes.length - b.likes.length)
+          : b2.sort((a, b) => b.likes.length - a.likes.length)
         : b2;
 
     return filters.latestASC !== null
       ? filters.latestASC
-        ? b2.sort((a, b) => b.timestamp - a.timestamp)
-        : b2.sort((a, b) => a.timestamp - b.timestamp)
+        ? b2.sort((a, b) => a.timestamp - b.timestamp)
+        : b2.sort((a, b) => b.timestamp - a.timestamp)
       : b2;
   }, [filters, blogs]);
 
+  // pobieranie blogów z bazy danych
   useEffect(() => {
     const blogsRef = collection(db, "blogs");
     const q = query(blogsRef, orderBy("likes", "desc"));
@@ -57,6 +62,48 @@ const Blogs = () => {
     });
   }, []);
 
+  // zmiana aktualnego wyszukiwania
+  const handleQueryChange = e => {
+    setFilters(filters => {
+      return { ...filters, query: e.target.value };
+    });
+  };
+
+  // usuwanie tagów
+  const handleTagRemove = (e, i) => {
+    setFilters(filters => {
+      return {
+        ...filters,
+        tags: filters.tags.filter((t, j) => i != j),
+      };
+    });
+  };
+
+  // zmiana filtrowanie po polubieniach
+  const handleLikesChange = () => {
+    setFilters(filters => {
+      return { ...filters, likesASC: !filters.likesASC, latestASC: null };
+    });
+  };
+
+  // zmiana sortowania po najwcześniej utworzonych
+  const handleLeatestChange = () => {
+    setFilters(filters => {
+      return { ...filters, latestASC: !filters.latestASC, likesASC: null };
+    });
+  };
+
+  // dodawanie tagów
+  const handleTagAdd = () => {
+    if (filters.tags.length == 3) return;
+    setFilters(filters => {
+      return {
+        ...filters,
+        tags: [...filters.tags, tagInputRef.current.value],
+      };
+    });
+  };
+
   return (
     <>
       <Nav.Normal />
@@ -65,43 +112,13 @@ const Blogs = () => {
           <div>
             <span className="input-with-icon relative">
               <MagnifyingGlassIcon className="h-7 text-gray-500" />
-              <input
-                type="text"
-                placeholder="Szukaj"
-                onChange={e =>
-                  setFilters(filters => {
-                    return { ...filters, query: e.target.value };
-                  })
-                }
-              />
-              <span className="absolute -bottom-9 left-0">
-                {filters.tags.map((tag, i) => (
-                  <p
-                    key={tag + i}
-                    className="tag"
-                    onClick={() =>
-                      setFilters(filters => {
-                        return {
-                          ...filters,
-                          tags: filters.tags.filter((t, j) => i != j),
-                        };
-                      })
-                    }
-                  >
-                    {tag}
-                  </p>
-                ))}
-              </span>
+              <input type="text" placeholder="Szukaj" onChange={handleQueryChange} />
             </span>
             <button
               className={`button-solid ${
                 filters.likesASC !== null ? "text-white" : "button-white"
               }`}
-              onClick={() =>
-                setFilters(filters => {
-                  return { ...filters, likesASC: !filters.likesASC, latestASC: null };
-                })
-              }
+              onClick={handleLikesChange}
             >
               <p>Polubienia</p>
               {filters.likesASC ? (
@@ -114,11 +131,7 @@ const Blogs = () => {
               className={`button-solid ${
                 filters.latestASC !== null ? "text-white" : "button-white"
               }`}
-              onClick={() =>
-                setFilters(filters => {
-                  return { ...filters, latestASC: !filters.latestASC, likesASC: null };
-                })
-              }
+              onClick={handleLeatestChange}
             >
               <p>Najnowsze</p>
               {filters.latestASC ? (
@@ -128,24 +141,25 @@ const Blogs = () => {
               )}
             </button>
           </div>
-          <div>
+          <div className="relative">
             <span className="input-with-icon ">
               <MagnifyingGlassIcon className="h-7 text-gray-500" />
-              <input type="text" placeholder="Tag" ref={tagInputRef} />
+              <input type="text" placeholder="Tag" maxLength={15} ref={tagInputRef} />
             </span>
-            <button
-              className="button-solid"
-              onClick={() =>
-                setFilters(filters => {
-                  return {
-                    ...filters,
-                    tags: [...filters.tags, tagInputRef.current.value],
-                  };
-                })
-              }
-            >
+            <button className="button-solid" onClick={handleTagAdd}>
               <p>Dodaj tag</p>
             </button>
+            <span className="absolute -bottom-9 left-0">
+              {filters.tags.map((tag, i) => (
+                <p key={tag + i} className="tag">
+                  <span>{tag.length > 8 ? tag.slice(0, 7) + "..." : tag}</span>
+                  <XMarkIcon
+                    className="h-5 hover:text-red-500 cursor-pointer"
+                    onClick={e => handleTagRemove(e, i)}
+                  />
+                </p>
+              ))}
+            </span>
           </div>
         </div>
 

@@ -3,6 +3,13 @@
     min-height: 100vh;
     width: 100%;
 }
+#home .first-section #text {
+    animation: text-slide-in 500ms ease-in-out;
+}
+@keyframes text-slide-in {
+    0% { transform: translateY(-100px); opacity: .25; }
+    100% { transform: translateY(0px); opacity: 1}
+}
 #home .first-section {
     position: relative;
 }

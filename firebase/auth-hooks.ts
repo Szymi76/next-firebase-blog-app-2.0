@@ -85,7 +85,7 @@ const useAuthCreateUser = () => {
           displayName: displayName,
           photoURL: photoURL,
         })
-          .then(() => {
+          .then(res => {
             dispatch(ActionTypes.SUCCESS);
           })
           .catch(() => dispatch(ActionTypes.FAILRURE));
