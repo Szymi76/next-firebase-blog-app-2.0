@@ -114,6 +114,8 @@ const Blogs = () => {
               <MagnifyingGlassIcon className="h-7 text-gray-500" />
               <input type="text" placeholder="Szukaj" onChange={handleQueryChange} />
             </span>
+          </div>
+          <div>
             <button
               className={`button-solid ${
                 filters.likesASC !== null ? "text-white" : "button-white"

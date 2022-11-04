@@ -11,9 +11,10 @@ import { useRouter } from "next/router";
 interface CardProps {
   blog: Blog;
   size: "small" | "large";
+  className?: string;
 }
 
-const Card = ({ blog, size }: CardProps) => {
+const Card = ({ blog, size, className = "" }: CardProps) => {
   const user = useAuthUser();
   const [liked, setLiked] = useState(false);
 
@@ -37,7 +38,7 @@ const Card = ({ blog, size }: CardProps) => {
   }, [user]);
 
   return (
-    <div className={`blog-card ${size == "small" ? "blog-card-small" : ""}`}>
+    <div className={`blog-card ${className} ${size == "small" ? "blog-card-small" : ""}`}>
       <img
         src={blog.image}
         className="image"

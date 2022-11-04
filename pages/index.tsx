@@ -8,11 +8,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { query, orderBy, limit, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { useAnimateOnShow } from "../ts/useAnimateOnShow";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
 
   const router = useRouter();
+
+  useAnimateOnShow("home-card", "card-animation");
 
   useEffect(() => {
     const blogsRef = collection(db, "blogs");
@@ -46,11 +49,11 @@ const Home = () => {
         {blogs.length >= 4 ? (
           <section className="second-section">
             <h1 className="title">Popularne</h1>
-            <Card blog={blogs[0]} size="large" />
+            <Card blog={blogs[0]} size="large" className="home-card" />
             <div className="small-cards">
-              <Card blog={blogs[1]} size="small" />
-              <Card blog={blogs[2]} size="small" />
-              <Card blog={blogs[3]} size="small" />
+              <Card blog={blogs[1]} size="small" className="home-card" />
+              <Card blog={blogs[2]} size="small" className="home-card" />
+              <Card blog={blogs[3]} size="small" className="home-card" />
               <Link href={"/blogi"}>
                 <button>
                   <span>Zobacz wszystkie</span>

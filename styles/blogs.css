@@ -27,5 +27,7 @@
 @media (max-width: 1050px) {
     #blogs-options {
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }

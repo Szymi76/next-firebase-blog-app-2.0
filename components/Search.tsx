@@ -21,8 +21,8 @@ const Search = () => {
       <div>
         {filteredAuto.map((auto, index) => {
           return (
-            <Link href={auto.path}>
-              <h3 key={"key" + index}>{auto.title}</h3>
+            <Link key={"key" + index} href={auto.path}>
+              <h3>{auto.title}</h3>
             </Link>
           );
         })}

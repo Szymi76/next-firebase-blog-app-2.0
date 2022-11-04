@@ -74,7 +74,8 @@
     background-color: var(--dark);
 }
 #blog-actions {
-    width: 900px;
+    width: 90%;
+    max-width: 900px;
     margin: 0 auto;
     padding-bottom: 10rem;
 }
