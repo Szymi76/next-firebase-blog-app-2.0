@@ -88,8 +88,8 @@ export const Normal = ({ transparent = false }: NormalProps) => {
               <p>{user?.email}</p>
             </div>
             <div className="menu-links">
-              <Link href={"/"}>Dashboard</Link>
-              <Link href={"/"}>Ustawienia</Link>
+              <Link href={"/panel"}>Dashboard</Link>
+              <Link href={"/ustawienia"}>Ustawienia</Link>
             </div>
             <p
               onClick={async () => await signOut(auth)}

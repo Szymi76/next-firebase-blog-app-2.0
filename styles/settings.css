@@ -1,0 +1,57 @@
+/* setting page */
+#settings-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    padding: 5rem 2rem 2rem 15rem;
+    background-color: var(--light-gray);
+}
+@media (max-width: 900px) {
+    #settings-wrapper {
+        padding-left: 5rem !important;
+    } 
+}
+/* navigator */
+#navigator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 3rem;
+    height: 100vh;
+    background-color: var(--white);
+    color: var(--black);
+    border-right: 1px solid var(--gray);
+    overflow: hidden;
+    padding: 3rem .5rem 1rem .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    transition-duration: 100ms;
+}
+#navigator-links {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    height: 100%;
+    padding-top: 5rem;
+}
+.navigator-toggled {
+    width: 13rem !important;
+    padding-left: 1rem !important;
+}
+.active-link {
+    color: var(--violet) !important;
+}
+#navigator button {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    font-weight: 600;
+    padding: .25rem 0;
+    transition-duration: 100ms;
+    outline: none;
+}
+#navigator button:hover {
+    color: var(--violet);
+}
