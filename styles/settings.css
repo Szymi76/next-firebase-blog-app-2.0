@@ -15,6 +15,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 20;
     width: 3rem;
     height: 100vh;
     background-color: var(--white);
@@ -54,4 +55,46 @@
 }
 #navigator button:hover {
     color: var(--violet);
+}
+
+/* settings page */
+hr {
+    background-color: var(--gray);
+    margin: 1rem 0;
+    max-width: 1300px;
+}
+.input-wrapper {
+    display: flex;
+    gap: .5rem;
+    max-width: 1300px;
+    padding: 1rem 0;
+}
+.input-wrapper p {
+    color: var(--dark-gray);
+    width: 20%;
+}
+.input-wrapper input {
+    width: 100%;
+}
+.input-wrapper button {
+    margin: 0 0 0 auto;
+}
+.input-wrapper img {
+    border-radius: 9999px;
+    object-fit: cover;
+    height: 75px;
+    width: 75px;
+    margin-right: 3rem;
+}
+@media (max-width: 750px) {
+    .input-wrapper {
+        flex-direction: column;
+    }
+    .input-wrapper p {
+        width: 100%;
+    }
+    .input-wrapper button {
+        margin: 0;
+        width: 85px
+    }
 }
