@@ -88,6 +88,7 @@ const Summary = () => {
       authorUID: user.uid,
       timestamp: +new Date(),
       linkName: linkName,
+      public: true,
     };
 
     // DEBUG

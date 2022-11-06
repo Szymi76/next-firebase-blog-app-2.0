@@ -27,7 +27,8 @@ interface Blog {
   authorUID: string;
   comments: BlogComment[];
   timestamp: number;
-  linkName?: string;
+  linkName: string;
+  public: boolean;
 }
 
 export type { Blog, BlogSection, BlogArticle, BlogComment };

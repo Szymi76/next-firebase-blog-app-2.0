@@ -84,8 +84,14 @@ export const Normal = ({ transparent = false }: NormalProps) => {
         {show && user && (
           <div className="user-menu">
             <div className="text-slate-800">
-              <p>{user?.displayName}</p>
-              <p>{user?.email}</p>
+              <p>
+                {user?.displayName.length > 18
+                  ? user?.displayName.slice(0, 17) + "..."
+                  : user?.displayName}
+              </p>
+              <p>
+                {user?.email.length > 18 ? user?.email.slice(0, 17) + "..." : user?.email}
+              </p>
             </div>
             <div className="menu-links">
               <Link href={"/panel"}>Dashboard</Link>
@@ -154,8 +160,14 @@ export const Dev = () => {
         {show && user && (
           <div className="user-menu">
             <div className="text-slate-800">
-              <p>{user.displayName}</p>
-              <p>{user.email}</p>
+              <p>
+                {user?.displayName.length > 18
+                  ? user?.displayName.slice(0, 17) + "..."
+                  : user?.displayName}
+              </p>
+              <p>
+                {user?.email.length > 18 ? user?.email.slice(0, 17) + "..." : user?.email}
+              </p>
             </div>
             <div className="menu-links">
               <Link href={"/"}>Dashboard</Link>

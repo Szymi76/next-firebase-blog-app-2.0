@@ -29,6 +29,9 @@
     justify-content: center;
     align-items: center;
 }
+#left-side-text div {
+    animation: text-slide-in 500ms ease-in-out;
+}
 #left-side-text h1 {
     font-size: 3rem;
     font-weight: 600;

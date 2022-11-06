@@ -10,11 +10,15 @@ import { useAuthUser } from "../firebase/auth-hooks";
 import { Oval } from "react-loader-spinner";
 import { useRouter } from "next/router";
 import Modal from "../components/Modal";
+import { Blog as BlogType } from "../ts/BlogTypes";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 
 const Edytor = () => {
   const [hold, event] = useMouseHold("resizer");
   const [width, setWidth] = useState(50);
   const [showModal, setShowModal] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const { blog, dispatch } = useContext(BlogContext);
 
@@ -42,6 +46,31 @@ const Edytor = () => {
     window.addEventListener("beforeunload", handleBeforeunload);
     return () => window.removeEventListener("beforeunload", handleBeforeunload);
   }, []);
+
+  // upload bloga do firebase
+  const handleBlogSave = async () => {
+    // const filesArr = blog.content.map(e => e.image);
+    // const urls = await uploadContentImages(linkName, filesArr);
+    // const titleImage = await uploadFile(blog.image, linkName + "_main");
+    const blogRef = doc(db, "blogs", `${user.uid}-${Math.random()}`);
+
+    // dispatch({ type: ActionTypes.BLOG_IMAGE, payload: titleImage });
+
+    const blogObj: BlogType = {
+      ...blog,
+      image: null,
+      authorUID: user.uid,
+      timestamp: +new Date(),
+      linkName: "",
+      public: false,
+    };
+
+    await setDoc(blogRef, blogObj)
+      .then(() => {
+        console.log("Blog został zapisany");
+      })
+      .catch(err => {});
+  };
 
   return (
     <>
@@ -72,7 +101,11 @@ const Edytor = () => {
                 />
               </div>
               <div>
-                <Button.Solid className="editor-button" children="Zapisz" />
+                <Button.Solid
+                  className="editor-button"
+                  children="Zapisz"
+                  onClick={handleBlogSave}
+                />
                 <Button.Solid
                   className="editor-button"
                   children="Prześlj"
