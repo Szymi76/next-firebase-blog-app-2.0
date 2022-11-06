@@ -8,8 +8,10 @@ import {
   BarsArrowDownIcon,
   BarsArrowUpIcon,
   XMarkIcon,
+  Squares2X2Icon,
 } from "@heroicons/react/24/outline";
 import { Blog } from "../ts/BlogTypes";
+import CardRow from "../components/BlogCardRow";
 
 interface FilterTypes {
   query: string;
@@ -28,6 +30,7 @@ const initialFilter: FilterTypes = {
 const Blogs = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [filters, setFilters] = useState(initialFilter);
+  const [view, setView] = useState<"normal" | "row">("normal");
 
   const tagInputRef = useRef<HTMLInputElement>();
 
@@ -104,10 +107,14 @@ const Blogs = () => {
     });
   };
 
+  const toggleView = () => {
+    setView(view => (view == "normal" ? "row" : "normal"));
+  };
+
   return (
     <>
       <Nav.Normal />
-      <main className="p-3 flex flex-wrap mt-12 gap-3">
+      <main className="p-3 flex flex-col flex-wrap mt-12 gap-3">
         <div id="blogs-options">
           <div>
             <span className="input-with-icon relative">
@@ -165,9 +172,19 @@ const Blogs = () => {
           </div>
         </div>
 
+        <div className="flex justify-end w-full max-w-[1400px] mx-auto">
+          <Squares2X2Icon className="h-9 cursor-pointer" onClick={toggleView} />
+        </div>
+
         <section className="max-w-[1450px] w-full flex flex-wrap justify-center mx-auto gap-2">
           {filteredBlogs.map((blog, i) => (
-            <Card key={"blog" + i} blog={blog} size="small" />
+            <>
+              {view == "normal" ? (
+                <Card key={"blog" + i} blog={blog} size="small" />
+              ) : (
+                <CardRow key={"blog" + i} blog={blog} />
+              )}
+            </>
           ))}
         </section>
       </main>

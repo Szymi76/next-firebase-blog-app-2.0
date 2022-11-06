@@ -13,6 +13,7 @@ import Modal from "../components/Modal";
 import { Blog as BlogType } from "../ts/BlogTypes";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { uploadContentImages, uploadFile } from "../firebase/functions";
 
 const Edytor = () => {
   const [hold, event] = useMouseHold("resizer");
@@ -49,20 +50,23 @@ const Edytor = () => {
 
   // upload bloga do firebase
   const handleBlogSave = async () => {
-    // const filesArr = blog.content.map(e => e.image);
-    // const urls = await uploadContentImages(linkName, filesArr);
-    // const titleImage = await uploadFile(blog.image, linkName + "_main");
-    const blogRef = doc(db, "blogs", `${user.uid}-${Math.random()}`);
+    const linkName =
+      blog.linkName.length > 0 ? blog.linkName : `${user.uid}-${Math.random()}`;
 
-    // dispatch({ type: ActionTypes.BLOG_IMAGE, payload: titleImage });
+    const filesArr = blog.content.map(e => e.image);
+    const urls = await uploadContentImages(linkName, filesArr);
+    const titleImage = await uploadFile(blog.image, linkName + "_main");
+    const blogRef = doc(db, "blogs", `${linkName}`);
 
     const blogObj: BlogType = {
       ...blog,
-      image: null,
+      content: blog.content.map((s, i) => {
+        return { ...s, image: urls[i] };
+      }),
+      image: titleImage,
       authorUID: user.uid,
       timestamp: +new Date(),
-      linkName: "",
-      public: false,
+      linkName: linkName,
     };
 
     await setDoc(blogRef, blogObj)

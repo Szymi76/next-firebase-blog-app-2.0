@@ -3,6 +3,7 @@ import { createContext, Dispatch } from "react";
 
 // dostępne akcje reducera
 enum ActionTypes {
+  BLOG = "BLOG", // cały blog
   BLOG_TITLE = "BLOG_TITLE", // title
   BLOG_DESCRIPTION = "DESCRIPTION", // description
   BLOG_IMAGE = "BLOG_IMAGE", // image
@@ -17,6 +18,7 @@ enum ActionTypes {
 
 // akcje dispatcha
 type BlogAction =
+  | { type: ActionTypes.BLOG; payload: Blog }
   | { type: ActionTypes.BLOG_TITLE; payload: string }
   | { type: ActionTypes.BLOG_DESCRIPTION; payload: string }
   | { type: ActionTypes.BLOG_IMAGE; payload: any }
@@ -80,6 +82,10 @@ const blogReducer = (state: Blog, action: BlogAction) => {
 
   switch (type) {
     // tytul calego bloga
+    case ActionTypes.BLOG:
+      return {
+        ...payload,
+      };
     case ActionTypes.BLOG_TITLE:
       return {
         ...state,

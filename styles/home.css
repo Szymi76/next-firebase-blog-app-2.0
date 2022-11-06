@@ -213,3 +213,24 @@
 #home .third-section span {
     text-decoration: underline;
 }
+
+/* card row */
+.card-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid var(--black);
+    padding: .75rem;
+    overflow: hidden;
+}
+.card-row h2 {
+    font-size: large;
+    white-space: nowrap;
+}
+.card-row span p{
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+    font-size: small;
+    padding: .25rem 1.25rem;
+    border-radius: 9999px;
+}
