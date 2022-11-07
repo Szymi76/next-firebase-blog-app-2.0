@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useAuthCreateUser } from "../firebase/auth-hooks";
-import * as Button from "../components/Button";
-import * as Input from "../components/Input";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useAuthCreateUser } from "../firebase/auth-hooks";
 import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
-import FormImage from "../public/form2.png";
 import { Oval } from "react-loader-spinner";
+import * as Button from "../components/Button";
+import * as Input from "../components/Input";
+import FormImage from "../public/form2.png";
 
 const imageURL =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUrUUiWNFJ1yVTnNtdVFE5ckNSBMivem7lrQ&usqp=CAU";

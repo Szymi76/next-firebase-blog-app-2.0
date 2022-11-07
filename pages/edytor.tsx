@@ -1,30 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
-import * as Nav from "../components/Nav";
-import { useMouseHold } from "../ts/useMouseHold";
-import { ActionTypes, BlogContext } from "../ts/blogReducer";
-import { PencilIcon } from "@heroicons/react/24/outline";
-import * as Button from "../components/Button";
-import Blog from "../components/Blog";
-import Form from "../components/Form";
-import { useAuthUser } from "../firebase/auth-hooks";
-import { Oval } from "react-loader-spinner";
 import { useRouter } from "next/router";
-import Modal from "../components/Modal";
-import { Blog as BlogType } from "../ts/BlogTypes";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { useAuthUser } from "../firebase/auth-hooks";
 import { uploadContentImages, uploadFile } from "../firebase/functions";
+import { useMouseHold } from "../ts/useMouseHold";
+import { ActionTypes, BlogContext } from "../ts/blogReducer";
+import { Blog as BlogType } from "../ts/BlogTypes";
+import { PencilIcon } from "@heroicons/react/24/outline";
+import { Oval } from "react-loader-spinner";
+import Blog from "../components/Blog";
+import Form from "../components/Form";
+import Modal from "../components/Modal";
+import * as Button from "../components/Button";
+import * as Nav from "../components/Nav";
 
 const Edytor = () => {
   const [hold, event] = useMouseHold("resizer");
   const [width, setWidth] = useState(50);
   const [showModal, setShowModal] = useState(false);
   const [saving, setSaving] = useState(false);
-
   const { blog, dispatch } = useContext(BlogContext);
 
   const user = useAuthUser();
-
   const router = useRouter();
 
   // ustawianie % długości podczas ruszaniem resizerem
@@ -33,6 +31,7 @@ const Edytor = () => {
     setWidth(widthCorrection(event));
   }, [event]);
 
+  // przekierowanie niezalogowanego użytkownika
   useEffect(() => {
     if (user === null) router.replace("/zaloguj-sie");
   }, [user]);
@@ -53,11 +52,13 @@ const Edytor = () => {
     const linkName =
       blog.linkName.length > 0 ? blog.linkName : `${user.uid}-${Math.random()}`;
 
+    // dane potrzebne do zapisania bloga
     const filesArr = blog.content.map(e => e.image);
     const urls = await uploadContentImages(linkName, filesArr);
     const titleImage = await uploadFile(blog.image, linkName + "_main");
     const blogRef = doc(db, "blogs", `${linkName}`);
 
+    // objekt bloga
     const blogObj: BlogType = {
       ...blog,
       content: blog.content.map((s, i) => {
@@ -69,6 +70,7 @@ const Edytor = () => {
       linkName: linkName,
     };
 
+    // upload zapisanego bloga
     await setDoc(blogRef, blogObj)
       .then(() => {
         console.log("Blog został zapisany");
@@ -149,6 +151,7 @@ const Edytor = () => {
 
 export default Edytor;
 
+// korekcja szerokości w edytorze
 const widthCorrection = (event: globalThis.MouseEvent) => {
   let width = Math.floor((event.pageX / document.documentElement.clientWidth) * 100);
   if (width < 10) width = 0;

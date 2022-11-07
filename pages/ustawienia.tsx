@@ -1,9 +1,7 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { userAgent } from "next/server";
-import SettingsWrapper from "../components/SettingsWrapper";
+import { uploadFile } from "../firebase/functions";
 import { useAuthUser } from "../firebase/auth-hooks";
-import * as Input from "../components/Input";
 import {
   sendEmailVerification,
   updateProfile,
@@ -11,9 +9,10 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
 } from "firebase/auth";
-import { uploadFile } from "../firebase/functions";
-import Alert from "../components/Alert";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import Alert from "../components/Alert";
+import SettingsWrapper from "../components/SettingsWrapper";
+import * as Input from "../components/Input";
 
 const Settings = () => {
   const user = useAuthUser();

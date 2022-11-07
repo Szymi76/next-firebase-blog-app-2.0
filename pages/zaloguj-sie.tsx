@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useAuthSignIn } from "../firebase/auth-hooks";
-import * as Button from "../components/Button";
-import * as Input from "../components/Input";
-import { signOut } from "firebase/auth";
-import { auth } from "../firebase/firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
-import FormImage from "../public/form2.png";
+import { useAuthSignIn } from "../firebase/auth-hooks";
 import { Oval } from "react-loader-spinner";
+import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
+import * as Button from "../components/Button";
+import * as Input from "../components/Input";
+import FormImage from "../public/form2.png";
 
 const Login = () => {
   const [signIn, user, loading, error] = useAuthSignIn();

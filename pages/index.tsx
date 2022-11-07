@@ -1,14 +1,13 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
-import * as Nav from "../components/Nav";
-import homeImage from "../public/home-image.jpg";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import Card from "../components/BlogCard";
-import { ExampleBlog } from "../ts/staticData";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { query, orderBy, limit, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { query, orderBy, limit, collection, getDocs } from "firebase/firestore";
 import { useAnimateOnShow } from "../ts/useAnimateOnShow";
+import Card from "../components/BlogCard";
+import * as Nav from "../components/Nav";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import homeImage from "../public/home-image.jpg";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
@@ -17,6 +16,7 @@ const Home = () => {
 
   useAnimateOnShow("home-card", "card-animation");
 
+  // pobieranie czterech najbardziej polubianych blogów
   useEffect(() => {
     const blogsRef = collection(db, "blogs");
     const q = query(blogsRef, orderBy("likes", "desc"), limit(4));

@@ -1,14 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
-import SettingsWrapper from "../components/SettingsWrapper";
-import {
-  Squares2X2Icon,
-  TrashIcon,
-  RocketLaunchIcon,
-  PencilSquareIcon,
-  EyeSlashIcon,
-  EyeIcon,
-} from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import { db } from "../firebase/firebase";
+import { useAuthUser } from "../firebase/auth-hooks";
 import {
   collection,
   getDocs,
@@ -18,24 +11,29 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../firebase/firebase";
-import { useAuthUser } from "../firebase/auth-hooks";
-import Card from "../components/BlogCard";
-import CardRow from "../components/BlogCardRow";
 import { ActionTypes, BlogContext } from "../ts/blogReducer";
 import { Blog } from "../ts/BlogTypes";
-import { useAnimateOnShow } from "../ts/useAnimateOnShow";
+import SettingsWrapper from "../components/SettingsWrapper";
+import Card from "../components/BlogCard";
+import CardRow from "../components/BlogCardRow";
+import {
+  Squares2X2Icon,
+  TrashIcon,
+  RocketLaunchIcon,
+  PencilSquareIcon,
+  EyeSlashIcon,
+  EyeIcon,
+} from "@heroicons/react/24/outline";
 
 const Panel = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [view, setView] = useState<"normal" | "row">("normal");
-
   const { blog, dispatch } = useContext(BlogContext);
 
   const user = useAuthUser();
-
   const router = useRouter();
 
+  // pobieranie blogów aktualnie zalogowanego użytkownika
   useEffect(() => {
     if (!user) return;
     const blogsRef = collection(db, "blogs");
@@ -48,37 +46,37 @@ const Panel = () => {
     });
   }, [user]);
 
+  // edytowanie
   const handleEdit = (index: number) => {
     dispatch({ type: ActionTypes.BLOG, payload: blogs[index] });
     router.push("/edytor", undefined, { shallow: true });
   };
 
+  // publikacja
   const handlePublish = (index: number) => {
     if (blogs[index].public) return;
     dispatch({ type: ActionTypes.BLOG, payload: blogs[index] });
     router.push("/podsumowanie", undefined, { shallow: true });
   };
 
+  // usuwanie
   const handleRemove = async (index: number) => {
     const blogRef = doc(db, "blogs", blogs[index].linkName);
     await deleteDoc(blogRef);
   };
 
+  // uktywanie / pokazywanie
   const handleHide = async (index: number) => {
-    // dispatch({ type: ActionTypes.HIDDEN, payload: !blogs[index].hidden})
     const blogRef = doc(db, "blogs", blogs[index].linkName);
     await updateDoc(blogRef, {
       hidden: !blogs[index].hidden,
     });
   };
 
+  // przęłączanie między normalnym, a kolumnową kartą
   const toggleView = () => {
     setView(view => (view == "normal" ? "row" : "normal"));
   };
-
-  useEffect(() => {
-    console.log(blog);
-  }, [blog]);
 
   return (
     <SettingsWrapper>
@@ -135,8 +133,6 @@ const Panel = () => {
                   title="Ukryj"
                 />
               )}
-
-              {/* <p>{blog.public ? "PUBLICZNY" : "NIEPUBLICZNY"}</p> */}
             </span>
           </div>
         ))}

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { query, orderBy, limit, collection, getDocs, where } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { Blog } from "../ts/BlogTypes";
 import Card from "../components/BlogCard";
+import CardRow from "../components/BlogCardRow";
 import * as Nav from "../components/Nav";
 import {
   MagnifyingGlassIcon,
@@ -10,8 +12,6 @@ import {
   XMarkIcon,
   Squares2X2Icon,
 } from "@heroicons/react/24/outline";
-import { Blog } from "../ts/BlogTypes";
-import CardRow from "../components/BlogCardRow";
 
 interface FilterTypes {
   query: string;
@@ -107,6 +107,7 @@ const Blogs = () => {
     });
   };
 
+  // przęłączanie między normalnym, a kolumnową kartą
   const toggleView = () => {
     setView(view => (view == "normal" ? "row" : "normal"));
   };
@@ -115,6 +116,7 @@ const Blogs = () => {
     <>
       <Nav.Normal />
       <main className="p-3 flex flex-col flex-wrap mt-12 gap-3">
+        {/* pasek opcji, filtrów i wyszukiwarek */}
         <div id="blogs-options">
           <div>
             <span className="input-with-icon relative">
@@ -172,10 +174,12 @@ const Blogs = () => {
           </div>
         </div>
 
+        {/* przełącznie widoku */}
         <div className="flex justify-end w-full max-w-[1400px] mx-auto">
           <Squares2X2Icon className="h-9 cursor-pointer" onClick={toggleView} />
         </div>
 
+        {/* karty blogów */}
         <section className="max-w-[1450px] w-full flex flex-wrap justify-center mx-auto gap-2">
           {filteredBlogs.map((blog, i) => (
             <>

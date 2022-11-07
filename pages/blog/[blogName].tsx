@@ -4,7 +4,6 @@ import { Blog as BlogType } from "../../ts/BlogTypes";
 import { useAuthUser } from "../../firebase/auth-hooks";
 import { useRouter } from "next/router";
 import { getDoc, doc } from "firebase/firestore";
-import { ExampleBlog } from "../../ts/staticData";
 import * as Nav from "../../components/Nav";
 import { Oval } from "react-loader-spinner";
 import { db } from "../../firebase/firebase";
@@ -15,11 +14,11 @@ const BlogPage = () => {
   const [exists, setExists] = useState(true);
 
   const user = useAuthUser();
-
   const router = useRouter();
 
   const { blogName } = router.query;
 
+  // sprawdzanie czy blog istnieje, jest opublokowany i nie jest ukryty.
   useEffect(() => {
     if (!blogName) return;
 

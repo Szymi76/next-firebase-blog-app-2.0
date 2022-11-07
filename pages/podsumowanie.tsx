@@ -1,27 +1,21 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import * as Nav from "../components/Nav";
-import { useMouseHold } from "../ts/useMouseHold";
-import { ActionTypes, BlogContext } from "../ts/blogReducer";
-import { PencilIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import * as Button from "../components/Button";
-import Blog from "../components/Blog";
-import Form from "../components/Form";
-import { useAuthUser } from "../firebase/auth-hooks";
-import { Oval } from "react-loader-spinner";
 import { useRouter } from "next/router";
-import Modal from "../components/Modal";
 import { uploadContentImages, uploadFile } from "../firebase/functions";
 import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
-import { db, storage } from "../firebase/firebase";
+import { useAuthUser } from "../firebase/auth-hooks";
+import { db } from "../firebase/firebase";
+import { ActionTypes, BlogContext } from "../ts/blogReducer";
 import { Blog as BlogType } from "../ts/BlogTypes";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Oval } from "react-loader-spinner";
+import * as Nav from "../components/Nav";
+import * as Button from "../components/Button";
 
 const Summary = () => {
+  const [loading, setLoading] = useState(false);
   const { blog, dispatch } = useContext(BlogContext);
 
-  const [loading, setLoading] = useState(false);
-
   const user = useAuthUser();
-
   const router = useRouter();
 
   const tagInputRef = useRef<HTMLInputElement>();
@@ -69,17 +63,6 @@ const Summary = () => {
     const titleImage = await uploadFile(blog.image, linkName + "_main");
     const blogRef = doc(db, "blogs", linkName);
 
-    // dispatch({ type: ActionTypes.BLOG_IMAGE, payload: titleImage });
-
-    // blog.content.forEach((section, i) => {
-    //   dispatch({ type: ActionTypes.IMAGE, payload: { newValue: urls[i], i: i } });
-    // });
-
-    // dispatch({
-    //   type: ActionTypes.FINAL_DATA,
-    //   payload: { authorUID: user.uid, tags: blog.tags, timestamp: +new Date() },
-    // });
-
     const blogObj: BlogType = {
       ...blog,
       content: blog.content.map((s, i) => {
@@ -96,11 +79,13 @@ const Summary = () => {
     // DEBUG
     console.log(blogObj);
 
+    // ref do bloga, który został stworzony jesli blog był wpierw zapisany
     const blogRefToRemove = doc(db, "blogs", blog.linkName);
     console.log(blog.linkName);
     const blogToDelete = await getDoc(blogRefToRemove);
     if (blogToDelete.exists()) await deleteDoc(blogRefToRemove);
 
+    // upload bloga bo firebase
     await setDoc(blogRef, blogObj)
       .then(() => {
         setLoading(false);
@@ -127,6 +112,7 @@ const Summary = () => {
                   bazy danych.
                 </p>
               </div>
+
               {/* link */}
               <div className="summary-row flex ">
                 <p className="text-gray-500 min-w-[25%]">Nazwa widoczna w linku</p>
@@ -141,6 +127,7 @@ const Summary = () => {
                   />
                 </div>
               </div>
+
               {/* tagi */}
               <div className="summary-row flex">
                 <p className="text-gray-500 min-w-[25%]">Tagi</p>
@@ -166,6 +153,7 @@ const Summary = () => {
                   </div>
                 </div>
               </div>
+
               {/* przyciski */}
               <div className="absolute w-full p-10 bottom-0 left-0 flex justify-between">
                 <div className="flex gap-2">
