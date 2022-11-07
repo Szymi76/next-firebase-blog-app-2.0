@@ -34,25 +34,36 @@ const CardRow = ({ blog, className = "" }: CardRowProps) => {
 
   useEffect(() => {
     setLiked(blog.likes.includes(user?.uid));
-  }, [user]);
+  }, [user, blog]);
 
   return (
     <div className={`card-row ${className}`}>
-      <h2 onClick={() => router.push(`/${blog.linkName}`)}>
+      {/* tytuł */}
+      <h2
+        onClick={() => router.push(`/blog/${blog.linkName}`)}
+        className="hover:brightness-90 cursor-pointer"
+      >
         {blog.title.length > 20 ? `${blog.title.slice(0, 20)}...` : blog.title}
       </h2>
+      {/* author uid */}
       <h2>
         {blog.authorUID.length > 10
           ? `${blog.authorUID.slice(0, 10)}...`
           : blog.authorUID}
       </h2>
-      <h2>{new Date(blog.timestamp).toISOString().slice(0, 10)}</h2>
-      <HeartIconSolid
-        className={`h-7 ${
-          liked ? "text-red-500" : "text-gray-600"
-        } cursor-pointer hover:text-red-500`}
-        onClick={handleLikesUpdate}
-      />
+      {/* data */}
+      <h3>{new Date(blog.timestamp).toISOString().slice(0, 10)}</h3>
+      {/* polubienia */}
+      <div className="flex gap-2">
+        <HeartIconSolid
+          className={`h-7 ${
+            liked ? "text-red-500" : "text-gray-600"
+          } cursor-pointer hover:text-red-500`}
+          onClick={handleLikesUpdate}
+        />
+        <h5 className="text-sm flex items-center text-gray-500">{blog.likes.length}</h5>
+      </div>
+      {/* tagi */}
       <span>
         <p>{blog.tags[0]}</p>
         {blog.tags.length > 1 && <p>{blog.tags[1]}</p>}

@@ -105,16 +105,16 @@ const Edytor = () => {
                 />
               </div>
               <div>
-                <Button.Solid
-                  className="editor-button"
-                  children="Zapisz"
-                  onClick={handleBlogSave}
-                />
-                <Button.Solid
-                  className="editor-button"
-                  children="Prześlj"
+                <button className="editor-button button-solid" onClick={handleBlogSave}>
+                  Zapisz
+                </button>
+                <button
+                  className="editor-button button-solid disabled:brightness-[80%]"
                   onClick={() => setShowModal(true)}
-                />
+                  disabled={blog.public}
+                >
+                  Prześlj
+                </button>
               </div>
             </section>
             <section id="container" className="resizer">

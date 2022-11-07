@@ -29,6 +29,7 @@ interface Blog {
   timestamp: number;
   linkName: string;
   public: boolean;
+  hidden: boolean;
 }
 
 export type { Blog, BlogSection, BlogArticle, BlogComment };

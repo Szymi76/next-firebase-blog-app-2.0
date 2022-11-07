@@ -11,7 +11,7 @@ import { Oval } from "react-loader-spinner";
 import { useRouter } from "next/router";
 import Modal from "../components/Modal";
 import { uploadContentImages, uploadFile } from "../firebase/functions";
-import { doc, setDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db, storage } from "../firebase/firebase";
 import { Blog as BlogType } from "../ts/BlogTypes";
 
@@ -27,10 +27,11 @@ const Summary = () => {
   const tagInputRef = useRef<HTMLInputElement>();
   const linkNameInputRef = useRef<HTMLInputElement>();
 
-  // przekierowanie niezalogowanego użytkownika
+  // przekierowanie niezalogowanego użytkownika lub bloga który jest już publiczny
   useEffect(() => {
     if (user === null) router.replace("/zaloguj-sie");
-  }, [user]);
+    if (blog.public) router.back();
+  }, [user, blog]);
 
   // zapobieganie przed odświeżeniem strony
   useEffect(() => {
@@ -89,10 +90,16 @@ const Summary = () => {
       timestamp: +new Date(),
       linkName: linkName,
       public: true,
+      hidden: false,
     };
 
     // DEBUG
     console.log(blogObj);
+
+    const blogRefToRemove = doc(db, "blogs", blog.linkName);
+    console.log(blog.linkName);
+    const blogToDelete = await getDoc(blogRefToRemove);
+    if (blogToDelete.exists()) await deleteDoc(blogRefToRemove);
 
     await setDoc(blogRef, blogObj)
       .then(() => {

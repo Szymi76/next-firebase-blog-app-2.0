@@ -30,7 +30,7 @@ const BlogPage = () => {
 
     const blogRef = doc(db, "blogs", blogName);
     getDoc(blogRef).then(snapshot => {
-      if (!snapshot.exists() || !snapshot.data()?.public) {
+      if (!snapshot.exists() || !snapshot.data()?.public || snapshot.data()?.hidden) {
         setExists(false);
         return;
       }

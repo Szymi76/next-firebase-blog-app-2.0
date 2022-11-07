@@ -14,6 +14,7 @@ enum ActionTypes {
   IMAGE = "IMAGE", // section image
   TAGS = "TAGS", // tags
   FINAL_DATA = "FINAL_DATA", // authorUID, tags, timestamp
+  HIDDEN = "HIDDEN", // blog ukryty \ nie ukryty
 }
 
 // akcje dispatcha
@@ -34,7 +35,8 @@ type BlogAction =
   | {
       type: ActionTypes.FINAL_DATA;
       payload: { authorUID: string; tags: string[]; timestamp: number };
-    };
+    }
+  | { type: ActionTypes.HIDDEN; payload: boolean };
 
 // przykładowy artykuł
 const DEFAULT_ARTICLE: BlogArticle = {
@@ -74,6 +76,7 @@ const initialState: Blog = {
   comments: [DEFAULT_COMMENT, DEFAULT_COMMENT],
   linkName: "",
   public: false,
+  hidden: true,
 };
 
 // blog reducer
@@ -161,6 +164,12 @@ const blogReducer = (state: Blog, action: BlogAction) => {
         authorUID: payload.authorUID,
         tags: payload.tags,
         timestamp: payload.timestamp,
+      };
+    // tagi
+    case ActionTypes.HIDDEN:
+      return {
+        ...state,
+        hidden: payload,
       };
     default:
       return state;

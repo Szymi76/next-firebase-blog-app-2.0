@@ -138,3 +138,22 @@ hr {
     padding: 1.5rem 1rem;
     border: 1px solid var(--black);
 }
+
+/* dashboard */
+#dashboard-list {
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 3.5rem;
+    gap: 1rem;
+}
+.card-container {
+    position: relative;
+    display: flex;
+    min-width: 350px;
+    margin-bottom: 2rem;
+    background-color: var(--white);
+}
+

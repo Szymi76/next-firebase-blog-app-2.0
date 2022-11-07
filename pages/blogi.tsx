@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import { query, orderBy, limit, collection, getDocs } from "firebase/firestore";
+import { query, orderBy, limit, collection, getDocs, where } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import Card from "../components/BlogCard";
 import * as Nav from "../components/Nav";
@@ -57,7 +57,7 @@ const Blogs = () => {
   // pobieranie blogów z bazy danych
   useEffect(() => {
     const blogsRef = collection(db, "blogs");
-    const q = query(blogsRef, orderBy("likes", "desc"));
+    const q = query(blogsRef, where("hidden", "==", false));
     getDocs(q).then(snapshot => {
       const arr = [];
       snapshot.forEach(doc => arr.push(doc.data()));
@@ -180,9 +180,9 @@ const Blogs = () => {
           {filteredBlogs.map((blog, i) => (
             <>
               {view == "normal" ? (
-                <Card key={"blog" + i} blog={blog} size="small" />
+                <Card key={"blog1" + i} blog={blog} size="small" />
               ) : (
-                <CardRow key={"blog" + i} blog={blog} />
+                <CardRow key={"blog2" + i} blog={blog} />
               )}
             </>
           ))}

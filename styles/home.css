@@ -217,15 +217,23 @@
 /* card row */
 .card-row {
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr .25fr 1.5fr;
     justify-content: space-between;
-    border: 1px solid var(--black);
+    border: 1px solid var(--gray);
     padding: .75rem;
     overflow: hidden;
 }
-.card-row h2 {
+.card-row h2, .card-row h3 {
     font-size: large;
     white-space: nowrap;
+}
+.card-row h3 {
+    color: var(--dark-gray);
+}
+.card-row span {
+    display: flex;
+    justify-content: flex-end;
 }
 .card-row span p{
     background-color: var(--light-gray);

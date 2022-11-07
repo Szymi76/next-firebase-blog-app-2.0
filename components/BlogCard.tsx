@@ -35,7 +35,7 @@ const Card = ({ blog, size, className = "" }: CardProps) => {
 
   useEffect(() => {
     setLiked(blog.likes.includes(user?.uid));
-  }, [user]);
+  }, [user, blog]);
 
   return (
     <div className={`blog-card ${className} ${size == "small" ? "blog-card-small" : ""}`}>
