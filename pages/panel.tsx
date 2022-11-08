@@ -24,6 +24,7 @@ import {
   EyeSlashIcon,
   EyeIcon,
 } from "@heroicons/react/24/outline";
+import anime from "../node_modules/animejs/lib/anime.es.js";
 
 const Panel = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
