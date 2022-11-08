@@ -71,7 +71,10 @@ const initialState: Blog = {
   content: [DEFAULT_SECTION, DEFAULT_SECTION],
   authorUID: "1",
   tags: ["Tory", "Nauka"],
-  likes: ["uid_1", "uid_2"],
+  likes: [
+    { uid: "uid_1", timestamp: 1666726388960 },
+    { uid: "uid_2", timestamp: 1666726388960 },
+  ],
   timestamp: 1666726388960,
   comments: [DEFAULT_COMMENT, DEFAULT_COMMENT],
   linkName: "",

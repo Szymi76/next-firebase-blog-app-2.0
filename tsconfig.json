@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "ts/useMouseMove.sx"  ],
+, "ts/useMouseMove.sx", "components/Chart.js"  ],
   "exclude": [
     "node_modules"
   ]

@@ -24,16 +24,16 @@ const CardRow = ({ blog, className = "" }: CardRowProps) => {
 
     const blogRef = doc(db, "blogs", blog.linkName);
     const likes = liked
-      ? blog.likes.filter(l => l != user.uid)
-      : [...blog.likes, user.uid];
+      ? blog.likes.filter(l => l.uid != user.uid)
+      : [...blog.likes, { uid: user.uid, timestamp: +new Date() }];
 
     await updateDoc(blogRef, {
       likes: likes,
-    }).then(() => setLiked(likes.includes(user?.uid)));
+    }).then(() => setLiked(likes.map(e => e.uid).includes(user?.uid)));
   };
 
   useEffect(() => {
-    setLiked(blog.likes.includes(user?.uid));
+    setLiked(blog.likes.map(e => e.uid).includes(user?.uid));
   }, [user, blog]);
 
   return (

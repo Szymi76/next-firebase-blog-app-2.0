@@ -23,7 +23,7 @@ interface Blog {
   image: any;
   content: BlogSection[];
   tags: string[];
-  likes: string[];
+  likes: { uid: string; timestamp: number }[];
   authorUID: string;
   comments: BlogComment[];
   timestamp: number;
