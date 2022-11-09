@@ -27,7 +27,6 @@ const SelectionBar = ({ currSect, setCurrSect }: SelectionBarProps) => {
   };
 
   const handleSectionRemove = (index: number) => {
-    console.log(blog.content.length);
     if (blog.content.length == 1) return;
     const filteredContent = blog.content.filter((s, i) => i != index);
     dispatch({ type: ActionTypes.ALL_SECTIONS, payload: filteredContent });

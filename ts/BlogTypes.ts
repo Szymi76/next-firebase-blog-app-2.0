@@ -30,6 +30,7 @@ interface Blog {
   linkName: string;
   public: boolean;
   hidden: boolean;
+  views: { uid: string; timestamp: number }[];
 }
 
 export type { Blog, BlogSection, BlogArticle, BlogComment };

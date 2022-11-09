@@ -77,13 +77,19 @@ const Summary = () => {
     };
 
     // DEBUG
-    console.log(blogObj);
+    // console.log(blogObj);
 
     // ref do bloga, który został stworzony jesli blog był wpierw zapisany
-    const blogRefToRemove = doc(db, "blogs", blog.linkName);
-    console.log(blog.linkName);
-    const blogToDelete = await getDoc(blogRefToRemove);
-    if (blogToDelete.exists()) await deleteDoc(blogRefToRemove);
+    try {
+      const blogRefToRemove = doc(db, "blogs", blog.linkName);
+      console.log(blog.linkName);
+      const blogToDelete = await getDoc(blogRefToRemove);
+      if (blogToDelete.exists()) await deleteDoc(blogRefToRemove);
+    } catch {
+      console.warn(
+        "Prawdopodobnie nie istnieje blog do usunięcia. (Błąd referencji do bloga)"
+      );
+    }
 
     // upload bloga bo firebase
     await setDoc(blogRef, blogObj)

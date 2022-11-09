@@ -14,12 +14,13 @@ import Form from "../components/Form";
 import Modal from "../components/Modal";
 import * as Button from "../components/Button";
 import * as Nav from "../components/Nav";
+import Alert from "../components/Alert";
 
 const Edytor = () => {
   const [hold, event] = useMouseHold("resizer");
   const [width, setWidth] = useState(50);
   const [showModal, setShowModal] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const [saving, setSaving] = useState<string | null>(null);
   const { blog, dispatch } = useContext(BlogContext);
 
   const user = useAuthUser();
@@ -47,7 +48,7 @@ const Edytor = () => {
     return () => window.removeEventListener("beforeunload", handleBeforeunload);
   }, []);
 
-  // upload bloga do firebase
+  // zapisywanie -> upload bloga do firebase
   const handleBlogSave = async () => {
     const linkName =
       blog.linkName.length > 0 ? blog.linkName : `${user.uid}-${Math.random()}`;
@@ -73,7 +74,9 @@ const Edytor = () => {
     // upload zapisanego bloga
     await setDoc(blogRef, blogObj)
       .then(() => {
-        console.log("Blog został zapisany");
+        dispatch({ type: ActionTypes.LINK_NAME, payload: linkName });
+        setSaving("Zapisano bloga");
+        console.warn("Zapisano bloga");
       })
       .catch(err => {});
   };
@@ -145,6 +148,7 @@ const Edytor = () => {
         onCancel={() => setShowModal(false)}
         onConfirm={() => router.push("/podsumowanie")}
       />
+      <Alert label={saving} restore={() => setSaving(null)} />
     </>
   );
 };

@@ -3,7 +3,7 @@ import Blog from "../../components/Blog";
 import { Blog as BlogType } from "../../ts/BlogTypes";
 import { useAuthUser } from "../../firebase/auth-hooks";
 import { useRouter } from "next/router";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, updateDoc } from "firebase/firestore";
 import * as Nav from "../../components/Nav";
 import { Oval } from "react-loader-spinner";
 import { db } from "../../firebase/firebase";
@@ -28,7 +28,7 @@ const BlogPage = () => {
     }
 
     const blogRef = doc(db, "blogs", blogName);
-    getDoc(blogRef).then(snapshot => {
+    getDoc(blogRef).then(async snapshot => {
       if (!snapshot.exists() || !snapshot.data()?.public || snapshot.data()?.hidden) {
         setExists(false);
         return;
@@ -37,6 +37,18 @@ const BlogPage = () => {
       setBlog(snapshot.data());
     });
   }, [blogName]);
+
+  useEffect(() => {
+    if (!user || !blog || !blogName || Array.isArray(blogName)) return;
+
+    const blogRef = doc(db, "blogs", blogName);
+    const views = blog.views.map(s => s.uid);
+    if (!views.includes(user.uid)) {
+      updateDoc(blogRef, {
+        views: [...blog.views, { uid: user.uid, timestamp: +new Date() }],
+      });
+    }
+  }, [user, blogName, blog]);
 
   return (
     <>

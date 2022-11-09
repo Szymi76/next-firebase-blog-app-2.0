@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Blog } from "../ts/BlogTypes";
-// import Image from 'next';
+import Image from "next/image";
 import { CalendarIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { useAuthUser } from "../firebase/auth-hooks";
 import { useRouter } from "next/router";
+
+const placeholderImageURL =
+  "https://cdn.corporate.walmart.com/dims4/WMT/572511c/2147483647/strip/true/crop/1920x1066+0+7/resize/980x544!/quality/90/?url=https%3A%2F%2Fcdn.corporate.walmart.com%2F7b%2F66%2F142c151b4cd3a19c13e1ca65f193%2Fbusinessfornature-banner.png";
 
 interface CardProps {
   blog: Blog;
@@ -39,10 +42,22 @@ const Card = ({ blog, size, className = "" }: CardProps) => {
 
   return (
     <div className={`blog-card ${className} ${size == "small" ? "blog-card-small" : ""}`}>
-      <img
+      {/* <img
         src={blog.image}
         className="image"
         onClick={() => router.push(`/blog/${blog.linkName}`)}
+      /> */}
+      <Image
+        src={blog.image}
+        height={350}
+        width={size == "small" ? 350 : "30%"}
+        className="image"
+        objectFit={"cover"}
+        loading="lazy"
+        placeholder="blur"
+        blurDataURL={placeholderImageURL}
+        onClick={() => router.push(`/blog/${blog.linkName}`)}
+        layout="responsive"
       />
       <div className="content">
         <div className="info">

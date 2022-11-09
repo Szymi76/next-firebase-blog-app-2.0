@@ -15,6 +15,7 @@ enum ActionTypes {
   TAGS = "TAGS", // tags
   FINAL_DATA = "FINAL_DATA", // authorUID, tags, timestamp
   HIDDEN = "HIDDEN", // blog ukryty \ nie ukryty
+  LINK_NAME = "LINK_NAME", // blog ukryty \ nie ukryty
 }
 
 // akcje dispatcha
@@ -36,7 +37,8 @@ type BlogAction =
       type: ActionTypes.FINAL_DATA;
       payload: { authorUID: string; tags: string[]; timestamp: number };
     }
-  | { type: ActionTypes.HIDDEN; payload: boolean };
+  | { type: ActionTypes.HIDDEN; payload: boolean }
+  | { type: ActionTypes.LINK_NAME; payload: string };
 
 // przykładowy artykuł
 const DEFAULT_ARTICLE: BlogArticle = {
@@ -80,6 +82,16 @@ const initialState: Blog = {
   linkName: "",
   public: false,
   hidden: true,
+  views: [
+    { uid: "uid_1", timestamp: 1666726388960 },
+    { uid: "uid_2", timestamp: 1666726318960 },
+    { uid: "uid_3", timestamp: 1666726328960 },
+    { uid: "uid_4", timestamp: 1666726338960 },
+    { uid: "uid_5", timestamp: 1666726488960 },
+    { uid: "uid_6", timestamp: 1666726398960 },
+    { uid: "uid_7", timestamp: 1666726308960 },
+    { uid: "uid_8", timestamp: 1666726318960 },
+  ],
 };
 
 // blog reducer
@@ -173,6 +185,12 @@ const blogReducer = (state: Blog, action: BlogAction) => {
       return {
         ...state,
         hidden: payload,
+      };
+    // nazwa linku
+    case ActionTypes.LINK_NAME:
+      return {
+        ...state,
+        linkName: payload,
       };
     default:
       return state;

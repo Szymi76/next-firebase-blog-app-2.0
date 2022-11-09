@@ -167,7 +167,9 @@
 }
 #home .second-section .small-cards {
     position: relative;
+    width: 100%;
     display: flex;
+    justify-content: center;
     gap: 1rem;
 }
 #home .second-section .small-cards button {
@@ -192,6 +194,7 @@
 @media (max-width:850px) {
     #home .second-section .small-cards {
         flex-direction: column;
+        align-items: center;
     }
 }
 
