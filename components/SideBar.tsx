@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ArrowLeftOnRectangleIcon,
   HomeIcon,
@@ -12,9 +12,19 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
 const SideBar = () => {
-  const [toggled, setToggled] = useState(true);
+  const [toggled, setToggled] = useState(!(window.innerWidth < 900));
 
   const pageName = location.pathname.slice(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setToggled(!(window.innerWidth < 900));
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <aside id="navigator" className={`${toggled ? "navigator-toggled" : ""}`}>

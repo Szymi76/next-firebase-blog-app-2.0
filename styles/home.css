@@ -77,11 +77,13 @@
     display: flex;
 }
 .blog-card .image {
-    width: 40%;
     max-height: 350px;
     object-fit: cover;
     cursor: pointer;
     transition-duration: 100ms;
+}
+.blog-card span {
+    max-width: 350px inherit;
 }
 .blog-card .image:hover {
     filter: brightness(90%);

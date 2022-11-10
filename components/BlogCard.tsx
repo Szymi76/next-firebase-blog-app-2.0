@@ -50,7 +50,7 @@ const Card = ({ blog, size, className = "" }: CardProps) => {
       <Image
         src={blog.image}
         height={350}
-        width={size == "small" ? 350 : "30%"}
+        width={350}
         className="image"
         objectFit={"cover"}
         loading="lazy"

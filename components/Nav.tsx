@@ -27,6 +27,9 @@ export const Normal = ({ transparent = false }: NormalProps) => {
 
   const router = useRouter();
 
+  const imageURL =
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUrUUiWNFJ1yVTnNtdVFE5ckNSBMivem7lrQ&usqp=CAU";
+
   useEffect(() => {
     const handleScroll = () => {
       window.scrollY > 0 ? setShouldTransparent(false) : setShouldTransparent(true);
@@ -68,7 +71,7 @@ export const Normal = ({ transparent = false }: NormalProps) => {
         />
         {user ? (
           <Image
-            src={user?.photoURL}
+            src={user?.photoURL ? user.photoURL : imageURL}
             onClick={() => setShow(show => !show)}
             alt="profile-image"
             height={40}
@@ -170,8 +173,8 @@ export const Dev = () => {
               </p>
             </div>
             <div className="menu-links">
-              <Link href={"/"}>Dashboard</Link>
-              <Link href={"/"}>Ustawienia</Link>
+              <Link href={"/panel"}>Dashboard</Link>
+              <Link href={"/ustawienia"}>Ustawienia</Link>
             </div>
             <p
               onClick={async () => await signOut(auth)}

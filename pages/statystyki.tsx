@@ -9,70 +9,63 @@ import { useAuthUser } from "../firebase/auth-hooks";
 
 import TimeAgo from "javascript-time-ago";
 import pl from "javascript-time-ago/locale/pl";
+import { Oval } from "react-loader-spinner";
 
 const NUMBER_OF_LABELS = 5;
 const MILIS_RANGE = 1800 * 1000 * 12; // 30min * 12
 
 const Stats = () => {
-  const [last, setLast] = useState(1);
+  const [range, setRange] = useState(3600 * 24 * 3 * 1000); // 30min * 24
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [data, setData] = useState(null);
 
   const user = useAuthUser();
 
+  // formatowanie czasu -- np. 20 minut temu
   TimeAgo.addLocale(pl);
   const timeAgo = new TimeAgo("pl");
 
+  // pobieranie wszystkich blogów aktualnego użytkownika
   useEffect(() => {
     if (!user) return;
     const blogsRef = collection(db, "blogs");
     const q = query(blogsRef, where("authorUID", "==", user.uid));
-    // const q = query(blogsRef);
     getDocs(q).then(snapshot => {
       const arr = [];
       snapshot.forEach(doc => {
-        // await updateDoc(doc.ref, {
-        //   likes: [
-        //     { uid: "uid_1", timestamp: +new Date() - Math.floor(Math.random() * 86400) },
-        //     { uid: "uid_2", timestamp: +new Date() - Math.floor(Math.random() * 86400) },
-        //     { uid: "uid_3", timestamp: +new Date() - Math.floor(Math.random() * 86400) },
-        //   ],
-        // });
         arr.push(doc.data());
       });
       setBlogs(arr);
     });
   }, [user]);
 
+  // tworzenie etykiet wraz z licznikiem
   useEffect(() => {
-    // tablica z { uid: "xyz", timestamp: 82648221}
+    // tablica z timestampami polubieniami
     const likes = blogs
       .map(blog => blog.likes)
       .reduce((result, item) => {
         return result.concat(item);
       }, []);
 
+    // tablica z timestampami wejść
     const views = blogs
       .map(blog => blog.views)
       .reduce((result, item) => {
         return result.concat(item);
       }, []);
 
-    // sortByTime(likes, 9500000, 5);
-    const labelsWithCount = createLabelsWithCount(NUMBER_OF_LABELS, MILIS_RANGE, likes);
-    const viewsLabelsWithCount = createLabelsWithCount(
-      NUMBER_OF_LABELS,
-      MILIS_RANGE,
-      views
-    );
-    console.table(labelsWithCount);
+    // etykiety wraz z licznikiem dla polubień i wejść
+    const likesLabelsWithCount = createLabelsWithCount(NUMBER_OF_LABELS, range, likes);
+    const viewsLabelsWithCount = createLabelsWithCount(NUMBER_OF_LABELS, range, views);
 
+    // objekt dla wykresu
     const data = {
-      labels: labelsWithCount.map(l => timeAgo.format(Date.now() - l.label)),
+      labels: likesLabelsWithCount.map(l => timeAgo.format(Date.now() - l.label)),
       datasets: [
         {
           label: "Polubienia",
-          data: labelsWithCount.map(l => l.count),
+          data: likesLabelsWithCount.map(l => l.count),
           fill: false,
           borderColor: "#ef4444",
           tension: 0,
@@ -88,9 +81,38 @@ const Stats = () => {
     };
 
     setData(data);
-  }, [blogs]);
+  }, [blogs, range]);
 
-  return <SettingsWrapper>{data && <LineChart data={data} />}</SettingsWrapper>;
+  useEffect(() => console.log(range), [range]);
+
+  return (
+    <SettingsWrapper>
+      {data ? (
+        <>
+          <LineChart data={data} />
+          <div className="w-full flex justify-end px-10">
+            <select
+              onChange={e => setRange(+e.target.value)}
+              className="border px-3 py-1 outline-violet-600 cursor-pointer rounded"
+              defaultValue={3600 * 24 * 3 * 1000}
+            >
+              <option value={3600 * 1 * 1000}>1 godzina</option>
+              <option value={3600 * 24 * 1000}>24 godziny</option>
+              <option value={3600 * 24 * 3 * 1000}>72 godziny</option>
+              <option value={3600 * 24 * 7 * 1000}>7 dni</option>
+              <option value={3600 * 24 * 30 * 1000}>30 dni</option>
+              <option value={3600 * 24 * 183 * 1000}>6 miesięcy</option>
+              <option value={3600 * 24 * 365 * 1000}>1 rok</option>
+            </select>
+          </div>
+        </>
+      ) : (
+        <div className="w-full h-[50vh] grid place-content-center">
+          <Oval color="#7f56d9" secondaryColor="#7f56d9" strokeWidth={3} height={75} />
+        </div>
+      )}
+    </SettingsWrapper>
+  );
 };
 
 export default Stats;
