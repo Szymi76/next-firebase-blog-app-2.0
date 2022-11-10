@@ -10,10 +10,12 @@ interface BlogSection {
 }
 
 interface BlogComment {
-  uid: string;
-  value: string;
-  username: string;
+  authorUID: string;
+  displayName: string;
   photoURL: string;
+  value: string;
+  upvotes: string[];
+  downvotes: string[];
   timestamp: number;
 }
 

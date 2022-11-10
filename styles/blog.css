@@ -96,3 +96,20 @@
 #blog-footer span {
     text-decoration: underline;
 }
+
+/* comment section */
+#comment-section {
+    margin: 3rem auto;
+    width: 90%;
+    max-width: 900px;
+    border-top: 1px solid var(--gray);
+    padding-top: 3rem;
+}
+
+.comment {
+    margin-top: 1.75rem;
+}
+.comment pre {
+    font-family: 'Poppins', sans-serif;
+    padding: .5rem 0;
+}

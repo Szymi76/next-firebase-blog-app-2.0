@@ -56,11 +56,13 @@ const DEFAULT_SECTION: BlogSection = {
 
 // przykładowy komentarz
 const DEFAULT_COMMENT: BlogComment = {
-  uid: "1",
-  username: "Adam",
+  authorUID: "1",
+  displayName: "Adam",
   photoURL:
     "https://res.cloudinary.com/practicaldev/image/fetch/s--5kWkErFS--/c_imagga_scale,f_auto,fl_progressive,h_100,q_auto,w_100/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/366059/d2322733-1ef8-4f2b-b8e4-facef5397761.jpg",
   value: "Jakiś bardzo ciekawy komentarz",
+  upvotes: ["uid_1", "uid_2", "uid_3", "uid_4", "uid_5"],
+  downvotes: ["uid_1", "uid_2"],
   timestamp: 1666726388960,
 };
 
@@ -78,7 +80,7 @@ const initialState: Blog = {
     { uid: "uid_2", timestamp: 1666726388960 },
   ],
   timestamp: 1666726388960,
-  comments: [DEFAULT_COMMENT, DEFAULT_COMMENT],
+  comments: [DEFAULT_COMMENT, DEFAULT_COMMENT, DEFAULT_COMMENT],
   linkName: "",
   public: false,
   hidden: true,

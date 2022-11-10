@@ -7,6 +7,7 @@ const nextConfig = {
       "firebasestorage.googleapis.com",
       "encrypted-tbn0.gstatic.com",
       "cdn.corporate.walmart.com",
+      "res.cloudinary.com",
     ],
   },
 };
