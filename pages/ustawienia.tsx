@@ -13,6 +13,8 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import Alert from "../components/Alert";
 import SettingsWrapper from "../components/SettingsWrapper";
 import * as Input from "../components/Input";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 
 const Settings = () => {
   const user = useAuthUser();
@@ -32,9 +34,16 @@ const Settings = () => {
     if (nick.length < 4) return;
     updateProfile(user, {
       displayName: nick,
-    }).then(() => {
-      setAlertLabel("Nick został zaktualizowany");
-    });
+    })
+      .then(async () => {
+        const userDocRef = doc(db, "users", user.uid);
+        await updateDoc(userDocRef, {
+          displayName: nick,
+        });
+      })
+      .then(() => {
+        setAlertLabel("Nick został zaktualizowany");
+      });
   };
 
   // zmiana adresu email
@@ -73,7 +82,14 @@ const Settings = () => {
     const url = await uploadFile(image, `${user.uid}_photoURL`);
     updateProfile(user, {
       photoURL: url,
-    }).then(() => setAlertLabel("Zaktualizowano zdjęcie profilowe"));
+    })
+      .then(async () => {
+        const userDocRef = doc(db, "users", user.uid);
+        await updateDoc(userDocRef, {
+          photoURL: url,
+        });
+      })
+      .then(() => setAlertLabel("Zaktualizowano zdjęcie profilowe"));
   };
 
   return (

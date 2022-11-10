@@ -1,5 +1,5 @@
 import { useState, useEffect, useReducer } from "react";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,6 +8,7 @@ import {
   Unsubscribe,
   User,
 } from "firebase/auth";
+import { addDoc, doc, setDoc } from "firebase/firestore";
 
 // początkowy state reducera
 const initialState = {
@@ -85,6 +86,15 @@ const useAuthCreateUser = () => {
           displayName: displayName,
           photoURL: photoURL,
         })
+          .then(async () => {
+            const userDocRef = doc(db, "users", result.user.uid);
+            await setDoc(userDocRef, {
+              uid: result.user.uid,
+              // email: result.user.email,
+              displayName: displayName,
+              photoURL: photoURL,
+            });
+          })
           .then(res => {
             dispatch(ActionTypes.SUCCESS);
           })

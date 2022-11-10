@@ -16,9 +16,16 @@ import Image from "next/image";
 import TimeAgo from "javascript-time-ago";
 import pl from "javascript-time-ago/locale/pl";
 
+interface AuhorData {
+  uid: string;
+  displayName: string;
+  photoURL: string;
+}
+
 const BlogPage = () => {
   const [blog, setBlog] = useState<BlogType | null>(null);
   const [exists, setExists] = useState(true);
+  const [authors, setAuthors] = useState<AuhorData[] | null>(null);
 
   const user = useAuthUser();
   const router = useRouter();
@@ -26,8 +33,6 @@ const BlogPage = () => {
   const { blogName } = router.query;
 
   const commentInputRef = useRef<HTMLTextAreaElement>();
-
-  console.log("RE-RENDER");
 
   // sprawdzanie czy blog istnieje, jest opublokowany i nie jest ukryty.
   useEffect(() => {
@@ -65,6 +70,20 @@ const BlogPage = () => {
     });
   }, [blogName]);
 
+  useEffect(() => {
+    if (!blog) return;
+
+    const authorsArr = [];
+    blog.comments.forEach(async (c, i) => {
+      const userDocRef = doc(db, "users", c.authorUID);
+      const document = await getDoc(userDocRef);
+      authorsArr.push(document.data());
+    });
+    console.log(authorsArr);
+    setAuthors(authorsArr);
+  }, [blog]);
+
+  // aktualizacja zobaczeń aktualnego bloga
   useEffect(() => {
     if (!user || !blog || !blogName || Array.isArray(blogName)) return;
 
@@ -153,11 +172,20 @@ const BlogPage = () => {
         .catch(err => console.error(err));
     };
 
+    let photoURL = comment.photoURL;
+    let displayName = comment.displayName;
+    try {
+      photoURL = authors[index].photoURL;
+      displayName = authors[index].displayName;
+    } catch {
+      // console.warn("Nie wczytano danych użytkownika z komentarza.");
+    }
+
     return (
       <div className="comment">
         <div className="flex gap-2">
-          <Image src={comment.photoURL} height={50} width={50} className="rounded-full" />
-          <h4 className="font-semibold">{comment.displayName}</h4>
+          <Image src={photoURL} height={50} width={50} className="rounded-full" />
+          <h4 className="font-semibold">{displayName}</h4>
         </div>
         <pre>{comment.value}</pre>
         <div className="flex gap-1 justify-between">
