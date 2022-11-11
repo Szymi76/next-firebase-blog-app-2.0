@@ -5,7 +5,7 @@ import { doc, updateDoc, getDocs, collection } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 
 const abc = {
-  authorUID: "1",
+  authorUID: "Pk8Z1NhQwxPM7LJlIBFQi1XeQgC3",
   displayName: "Adam",
   photoURL:
     "https://res.cloudinary.com/practicaldev/image/fetch/s--5kWkErFS--/c_imagga_scale,f_auto,fl_progressive,h_100,q_auto,w_100/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/366059/d2322733-1ef8-4f2b-b8e4-facef5397761.jpg",

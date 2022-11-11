@@ -246,4 +246,5 @@
     font-size: small;
     padding: .25rem 1.25rem;
     border-radius: 9999px;
+    white-space: nowrap;
 }

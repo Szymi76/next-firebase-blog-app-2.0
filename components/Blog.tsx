@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Blog } from "../ts/BlogTypes";
-import { ExampleBlog } from "../ts/staticData";
-import * as Nav from "../components/Nav";
 import Image from "next/image";
 import { CalendarIcon, HeartIcon, Square2StackIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import { useAuthUser } from "../firebase/auth-hooks";
-import { initialState } from "../ts/blogReducer";
+
+const placeholderImageURL =
+  "https://cdn.corporate.walmart.com/dims4/WMT/572511c/2147483647/strip/true/crop/1920x1066+0+7/resize/980x544!/quality/90/?url=https%3A%2F%2Fcdn.corporate.walmart.com%2F7b%2F66%2F142c151b4cd3a19c13e1ca65f193%2Fbusinessfornature-banner.png";
 
 interface BlogProps {
   blog: Blog;
@@ -24,14 +24,36 @@ const Blog = ({ blog }: BlogProps) => {
           src={
             typeof blog.image == "string" ? blog.image : URL.createObjectURL(blog.image)
           }
-          className="absolute top-0 left-0 w-full -z-10 blur-lg "
+          className="absolute top-0 left-0 w-full -z-10 blur-lg"
         />
+        {/* <Image
+          src={blog.image}
+          height={400}
+          width={900}
+          className="absolute top-0 left-0 w-full -z-10 blur-lg"
+          objectFit={"cover"}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL={placeholderImageURL}
+          layout="responsive"
+        /> */}
         <img
           src={
             typeof blog.image == "string" ? blog.image : URL.createObjectURL(blog.image)
           }
           className="max-h-[400px]"
         />
+        {/* <Image
+          src={blog.image}
+          height={350}
+          width={350}
+          className="max-h-[400px]"
+          objectFit={"cover"}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL={placeholderImageURL}
+          layout="responsive"
+        /> */}
       </div>
       <div id="bottom-info">
         <div>
@@ -40,7 +62,7 @@ const Blog = ({ blog }: BlogProps) => {
           ))}
         </div>
         <div>
-          {user && blog.likes.includes(user.uid) ? (
+          {user && blog.likes.map(l => l.uid).includes(user.uid) ? (
             <HeartIconSolid className="h-6 text-red-500 mr-3" />
           ) : (
             <HeartIcon className="h-6 mr-3" />
