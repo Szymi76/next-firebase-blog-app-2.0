@@ -74,26 +74,14 @@ const initialState: Blog = {
     "https://cdn.corporate.walmart.com/dims4/WMT/572511c/2147483647/strip/true/crop/1920x1066+0+7/resize/980x544!/quality/90/?url=https%3A%2F%2Fcdn.corporate.walmart.com%2F7b%2F66%2F142c151b4cd3a19c13e1ca65f193%2Fbusinessfornature-banner.png",
   content: [DEFAULT_SECTION, DEFAULT_SECTION],
   authorUID: "1",
-  tags: ["Tory", "Nauka"],
-  likes: [
-    { uid: "uid_1", timestamp: 1666726388960 },
-    { uid: "uid_2", timestamp: 1666726388960 },
-  ],
+  tags: ["Nowy"],
+  likes: [],
   timestamp: 1666726388960,
-  comments: [DEFAULT_COMMENT, DEFAULT_COMMENT, DEFAULT_COMMENT],
+  comments: [],
   linkName: "",
   public: false,
   hidden: true,
-  views: [
-    { uid: "uid_1", timestamp: 1666726388960 },
-    { uid: "uid_2", timestamp: 1666726318960 },
-    { uid: "uid_3", timestamp: 1666726328960 },
-    { uid: "uid_4", timestamp: 1666726338960 },
-    { uid: "uid_5", timestamp: 1666726488960 },
-    { uid: "uid_6", timestamp: 1666726398960 },
-    { uid: "uid_7", timestamp: 1666726308960 },
-    { uid: "uid_8", timestamp: 1666726318960 },
-  ],
+  views: [],
 };
 
 // blog reducer

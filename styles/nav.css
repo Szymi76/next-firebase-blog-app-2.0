@@ -171,7 +171,7 @@
     right: 15rem;
     border: 1px solid var(--black);
     background-color: var(--white);
-    width: 20rem;
+    width: 14rem;
     height: 13rem;
     color: var(--black);
     display: flex;
@@ -181,7 +181,7 @@
 }
 #nav-search input {
     width: 80%;
-    font-size: x-large;
+    font-size: large;
     outline: none;
     border-bottom: 1px solid black;
     margin: 0 auto;
@@ -197,11 +197,27 @@
 }
 #nav-search div h3 {
     width: 100%;
-    font-size: x-large;
+    font-size: large;
     padding: 0 .75rem;
     text-align: center;
 }
 #nav-search div h3:hover {
     background-color: var(--light-gray);
     cursor: pointer;
+}
+@media (max-width: 900px) {
+    #nav-search {
+        position: absolute;
+        top: 17rem;
+        right: .5rem;
+        border: 1px solid var(--black);
+        background-color: var(--white);
+        width: 14rem;
+        height: 13rem;
+        color: var(--black);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1rem;
+    }
 }

@@ -170,14 +170,16 @@
 #home .second-section .small-cards {
     position: relative;
     width: 100%;
+    max-width: 1200px;
     display: flex;
     justify-content: center;
+    margin: 0 auto;
     gap: 1rem;
 }
 #home .second-section .small-cards button {
     position: absolute;
     bottom: -4rem;
-    right: 0;
+    right: 3.5rem;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -193,6 +195,33 @@
     color: var(--white);
 }
 
+#home .third-section {
+    background-color: var(--dark);
+    color: var(--white);
+    padding: 4rem 0;
+}
+#home .third-section h1 {
+    text-align: center;
+    padding-bottom: 4rem;
+    font-size: xx-large;
+    font-weight: 600;
+}
+#home .third-section div {
+    max-width: 1000px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1rem;
+}
+#home .third-section figure {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    padding: .25rem;
+}
+
+
 @media (max-width:850px) {
     #home .second-section .small-cards {
         flex-direction: column;
@@ -200,22 +229,22 @@
     }
 }
 
-/* third section */
-#home .third-section {
-    height: 50vh;
+/* footer */
+#home footer {
     background-color: var(--dark);
     color: var(--white);
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    padding-bottom: 5rem;
+    padding: 3rem 0;
 }
-#home .third-section pre {
+#home footer pre {
     display: flex;
     font-family: 'Poppins', sans-serif;
     font-weight: 200;
 }
-#home .third-section span {
+#home footer span {
     text-decoration: underline;
 }
 
@@ -248,3 +277,5 @@
     border-radius: 9999px;
     white-space: nowrap;
 }
+
+
