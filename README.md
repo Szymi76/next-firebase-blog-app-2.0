@@ -20,4 +20,4 @@ npm run dev
 
 ## Design
 
-Design aplikacji - [Figma]([https://www.figma.com/file/X9BCsYwF8PsSw5iva4lYC4/Blog?node-id=0%3A1]).
+Design aplikacji - [Figma](https://www.figma.com/file/X9BCsYwF8PsSw5iva4lYC4/Blog?node-id=0%3A1).
