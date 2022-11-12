@@ -12,9 +12,9 @@ npm run dev
 ## Przygotowanie Firebase
 
  - Stworzenie projektu.
- - Stworzenie pliku `.env.local` i stworzenie wszystkich zmiennych z pliku `./firebase/firebase.js`.
+ - Stworzenie pliku `.env.local` i dodanie wszystkich zmiennych z pliku `./firebase/firebase.js`.
  - Dodanie autoryzacji za pomocą emaila i hasła.
- - Dodanie bazy danych i stworzenie kolekcji: blogs i users.
+ - Dodanie bazy danych i stworzenie kolekcji: `blogs` i `users`.
  - Dodanie storage.
 
 
