@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-## Przygotowanie Firebase
+## Firebase
 
  - Stworzenie projektu.
  - Stworzenie pliku `.env.local` i dodanie wszystkich zmiennych z pliku `./firebase/firebase.js`.
